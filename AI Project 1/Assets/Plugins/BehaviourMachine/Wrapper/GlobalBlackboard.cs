@@ -35,5 +35,6 @@ namespace BehaviourMachine {
         public static readonly int TRIGGER_ENTER_2D = -18;
         public static readonly int TRIGGER_EXIT = -19;
         public static readonly int TRIGGER_EXIT_2D = -20;
+        public static readonly int INFOCUS = -744971385;
     }
 }
