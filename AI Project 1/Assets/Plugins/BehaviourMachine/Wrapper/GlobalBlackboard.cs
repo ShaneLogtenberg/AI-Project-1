@@ -14,6 +14,8 @@ namespace BehaviourMachine {
         /// </summary>
         public static new GlobalBlackboard Instance {get {return InternalGlobalBlackboard.Instance as GlobalBlackboard;}}
 
+        // Vector3Vars
+        public static readonly int PlayerFront = -1244242442;
         // FsmEvents
         public static readonly int APPLICATION_FOCUS = -1;
         public static readonly int APPLICATION_PAUSE = -2;
@@ -36,5 +38,6 @@ namespace BehaviourMachine {
         public static readonly int TRIGGER_EXIT = -19;
         public static readonly int TRIGGER_EXIT_2D = -20;
         public static readonly int INFOCUS = -744971385;
+        public static readonly int OUTFOCUS = -126107795;
     }
 }

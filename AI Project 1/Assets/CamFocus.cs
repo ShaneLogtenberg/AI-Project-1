@@ -3,49 +3,43 @@ using System.Collections.Generic;
 using UnityEngine;
 using BehaviourMachine;
 
-public class RaycastCam : MonoBehaviour
+public class CamFocus : MonoBehaviour
 {
     public Camera mainCamera;
     public GameObject objectHit;
     public ConeCollider viewCone;
-    RaycastHit hit;
-    Ray ray;
-
-    private void FixedUpdate()
-    {
-
-        //ray = mainCamera.ViewportPointToRay(new Vector3(0.5F, 0.5F, 0));
-
-
-        //if (Physics.Raycast(ray, out hit))
-        //{
-        //    objectHit = hit.transform.gameObject;
-            
-        //    Debug.Log("I'm looking at " + hit.transform.name);
-        //}
-        //else
-        //{
-        //    objectHit = null;
-        //    Debug.Log("I'm looking at nothing!");
-        //}
-    }
+    public Vector3 playerFront;
 
     void OnTriggerEnter(Collider other)
     {
-        if(other.gameObject.layer != 8)
+        if (other.gameObject.layer != 8)
+        {
             Debug.Log("TriggerEnter \"" + other.gameObject.name + " \"Object");
             other.gameObject.GetComponent<Blackboard>().SendEvent("INFOCUS");
+            
+        }
     }
 
     void OnTriggerStay(Collider other)  
     {
         if (other.gameObject.layer != 8)
             Debug.Log("TriggerStay \"" + other.gameObject.name + " \"Object");
+        other.gameObject.GetComponent<MovingtoPlayer>().UpdatePlayerPosition(playerFront);
     }
 
     void OnTriggerExit(Collider other)
     {
         if (other.gameObject.layer != 8)
+        {
             Debug.Log("TriggerExit \"" + other.gameObject.name + " \"Object");
+            other.gameObject.GetComponent<Blackboard>().SendEvent("OUTFOCUS");
+        }
+    }
+
+    private void FixedUpdate()
+    {
+        playerFront = new Vector3(1.5f * Mathf.Cos(transform.rotation.y), 1, 1.5f * Mathf.Tan(transform.rotation.y));
+        
+
     }
 }
