@@ -15,6 +15,12 @@ public class MovingtoPlayer : StateBehaviour
         playerFront = curretplayerFront;
     }
 
+    // Called when the state is disabled
+    void OnDisable()
+    {
+        agent.isStopped = true;
+    }
+
     // Update is called once per frame
     void Update()
     {
