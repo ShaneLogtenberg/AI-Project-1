@@ -7,21 +7,18 @@ using UnityEngine.AI;
 public class MovingtoPlayer : StateBehaviour
 {
     private NavMeshAgent agent;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-    public void UpdatePlayerPosition(Vector3 playerFront)
+    public Vector3 playerFront;
+    public void UpdatePlayerPosition(Vector3 curretplayerFront)
     {
         agent = GetComponent<NavMeshAgent>();
-        agent.destination = playerFront;
+        agent.destination = curretplayerFront;
+        playerFront = curretplayerFront;
     }
 
     // Update is called once per frame
     void Update()
     {
         if (!agent.pathPending && agent.remainingDistance < 0.7f)
-            agent.isStopped = true;
+            SendEvent("REACHPLAYER");
     }
 }

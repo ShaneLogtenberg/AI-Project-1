@@ -8,7 +8,7 @@ public class CamFocus : MonoBehaviour
     public Camera mainCamera;
     public GameObject objectHit;
     public ConeCollider viewCone;
-    public Vector3 playerFront;
+    public GameObject playerFront;
 
     void OnTriggerEnter(Collider other)
     {
@@ -24,7 +24,7 @@ public class CamFocus : MonoBehaviour
     {
         if (other.gameObject.layer != 8)
             Debug.Log("TriggerStay \"" + other.gameObject.name + " \"Object");
-        other.gameObject.GetComponent<MovingtoPlayer>().UpdatePlayerPosition(playerFront);
+        other.gameObject.GetComponent<MovingtoPlayer>().UpdatePlayerPosition(playerFront.transform.position);
     }
 
     void OnTriggerExit(Collider other)
@@ -38,8 +38,7 @@ public class CamFocus : MonoBehaviour
 
     private void FixedUpdate()
     {
-        playerFront = new Vector3(1.5f * Mathf.Cos(transform.rotation.y), 1, 1.5f * Mathf.Tan(transform.rotation.y));
-        
+            
 
     }
 }
