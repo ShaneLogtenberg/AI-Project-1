@@ -6,7 +6,7 @@ using UnityEngine.AI;
 
 public class Wandering : StateBehaviour
 {
-    public Vector3[] points;
+    public Vector3 point;
     private int destPoint = 0;
     private NavMeshAgent agent;
     private void Start()
@@ -18,26 +18,28 @@ public class Wandering : StateBehaviour
         // between points (ie, the agent doesn't slow down as it
         // approaches a destination point).
         agent.autoBraking = false;
-        agent.speed = Random.Range(1f, 3f);
-        points = new Vector3[Random.Range(1,4)];
-        for (int i = 0; i < points.Length; i++)
-        {
-            points[i] = new Vector3(Random.Range(-10, 10), 0, Random.Range(-10, 10));
-        }
+        agent.speed = blackboard.GetFloatVar("Wander Speed").Value;
+
         GotoNextPoint();
     }
+
+    public Vector3 RandomNavmeshLocation(float radius)
+    {
+        Vector3 randomDirection = Random.insideUnitSphere * radius;
+        randomDirection += transform.position;
+        NavMeshHit hit;
+        Vector3 finalPosition = Vector3.zero;
+        if (NavMesh.SamplePosition(randomDirection, out hit, radius, 1))
+        {
+            finalPosition = hit.position;
+        }
+        return finalPosition;
+    }
+
     void GotoNextPoint()
     {
-        // Returns if no points have been set up
-        if (points.Length == 0)
-            return;
-
-        // Set the agent to go to the currently selected destination.
-        agent.destination = points[destPoint];
-
-        // Choose the next point in the array as the destination,
-        // cycling to the start if necessary.
-        destPoint = (destPoint + 1) % points.Length;
+        point = RandomNavmeshLocation(5f);
+        agent.SetDestination(point);
     }
 
 
