@@ -7,7 +7,7 @@ public class TriggerChild : MonoBehaviour
     private CamFocus parentScript;
     void Start()
     {
-        parentScript = transform.parent.GetComponent<CamFocus>();
+        parentScript = transform.parent.parent.GetComponent<CamFocus>();
     }
     void OnTriggerEnter(Collider other)
     {

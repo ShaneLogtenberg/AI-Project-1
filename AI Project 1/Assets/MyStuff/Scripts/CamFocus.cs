@@ -16,7 +16,7 @@ public class CamFocus : MonoBehaviour
         {
             if (other.gameObject.layer != 8)
             {
-                Debug.Log("TriggerEnter \"" + other.gameObject.name + " \"Object");
+                //Debug.Log("TriggerEnter \"" + other.gameObject.name + " \"Object");
                 other.gameObject.GetComponent<Blackboard>().SendEvent("INFOCUS");
 
             }
@@ -25,19 +25,20 @@ public class CamFocus : MonoBehaviour
         {
             if (other.gameObject.layer != 8)
             {
-                Debug.Log("TriggerEnter \"" + other.gameObject.name + " \"Object");
+                //Debug.Log("TriggerEnter \"" + other.gameObject.name + " \"Object");
                 other.gameObject.GetComponent<Blackboard>().SendEvent("ONSCREEN");
 
             }
         }
-    }        
+    }
 
-    void OnTriggerStay(Collider other)  
+    void OnTriggerStay(Collider other)
     {
         if (other.gameObject.layer != 8)
         {
             //Debug.Log("TriggerStay \"" + other.gameObject.name + " \"Object");
-            other.gameObject.GetComponent<MovingtoPlayer>().UpdatePlayerPosition(playerFront.transform.position);
+            if (other.gameObject.GetComponent<MovingtoPlayer>() != null)
+                other.gameObject.GetComponent<MovingtoPlayer>().UpdatePlayerPosition(playerFront.transform.position);
         }
     }
 
@@ -47,7 +48,7 @@ public class CamFocus : MonoBehaviour
         {
             if (other.gameObject.layer != 8)
             {
-                Debug.Log("TriggerExit \"" + other.gameObject.name + " \"Object");
+                //Debug.Log("TriggerExit \"" + other.gameObject.name + " \"Object");
                 other.gameObject.GetComponent<Blackboard>().SendEvent("OUTFOCUS");
 
             }
@@ -58,14 +59,11 @@ public class CamFocus : MonoBehaviour
             {
                 Debug.Log("TriggerExit \"" + other.gameObject.name + " \"Object");
                 other.gameObject.GetComponent<Blackboard>().SendEvent("OFFSCREEN");
+                if (other.gameObject.GetComponent<SneakingtoPlayer>() != null)
+                    other.gameObject.GetComponent<SneakingtoPlayer>().UpdatePlayerPosition(playerFront.transform.position);
 
             }
         }
     }
 
-    private void FixedUpdate()
-    {
-            
-
-    }
 }
