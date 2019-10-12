@@ -14,6 +14,8 @@ public class AllNPC : MonoBehaviour
     public Animator animator;
     [HideInInspector]
     public GlobalBlackboard global;
+    [HideInInspector]
+    public GameObject player;
 
     public GameObject foodThatIsFound;
     public StateBehaviour state;
@@ -29,6 +31,7 @@ public class AllNPC : MonoBehaviour
         blackboard = GetComponent<Blackboard>();
         state = GetComponent<StateBehaviour>();
         global = GameObject.Find("GlobalBlackboard").GetComponent<GlobalBlackboard>();
+        player = global.GetGameObjectVar("Player");
         InvokeRepeating("Sniff",1f,1f);
     }
 

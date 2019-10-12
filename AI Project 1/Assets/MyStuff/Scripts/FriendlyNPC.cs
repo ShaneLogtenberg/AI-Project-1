@@ -17,12 +17,6 @@ public class FriendlyNPC : AllNPC
         StartCoroutine(Think());
     }
 
-    private void Update()
-    {
-        remainingDistance = agent.remainingDistance;
-        navmeshpending = agent.pathPending;
-    }
-
     IEnumerator Think()
     {
         while (true)

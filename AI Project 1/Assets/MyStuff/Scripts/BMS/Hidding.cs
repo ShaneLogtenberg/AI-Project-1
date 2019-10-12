@@ -6,29 +6,31 @@ using UnityEngine.AI;
 
 public class Hidding : StateBehaviour
 {
-    AllNPC nPC;
+    ShyNPC nPC;
     public Vector3 destination;
 
     public void OnEnable()
     {
-        nPC = GetComponent<AllNPC>();
-        //nPC.agent.destination = blackboard.GetVector3Var("Point1").Value;
-        destination = nPC.agent.destination;
-        nPC.agent.speed = 5;
+        nPC = GetComponent<ShyNPC>();
+        Invoke("Hide", .1f);
     }
 
+    void Hide()
+    {
+        nPC.animator.SetBool("Walk", false);
+        nPC.agent.speed = 2;
+        nPC.agent.isStopped = true;
+    }
 
     // Called when the state is disabled
     void OnDisable()
     {
-        nPC.agent.isStopped = true;
+        
     }
 
     // Update is called once per frame
     void Update()
     {
-        //nPC.agent.destination = nPC.blackboard.GetVector3Var("Point1").Value;
-        destination = nPC.agent.destination;
         if (!nPC.agent.pathPending && nPC.agent.remainingDistance < 0.7f)
             nPC.agent.isStopped = true;
     }

@@ -78,4 +78,28 @@ public class Vision : MonoBehaviour {
         }
     }
 
+    public bool PointInSight(Vector3 testPoint)
+    {
+        // raycast from the owner toward object in volume
+        Vector3 rayDirection = testPoint - owner.transform.position;
+        Ray ray = new Ray(owner.transform.position, rayDirection);
+        RaycastHit hit;
+        MeshCollider meshCollider = GetComponent<MeshCollider>();
+        Physics.Raycast(ray, out hit, 1000);
+
+        // see object
+        if (hit.collider.bounds.Contains(testPoint) && meshCollider.bounds.Contains(testPoint))
+        {
+            Debug.DrawLine(owner.transform.position, testPoint, debugSightColor);
+            // is visible
+            return true;
+        }
+        else
+        {
+            Debug.DrawLine(ray.origin, hit.point, debugOccludedColor);
+            // can't see object
+            return false;
+        }
+    }
+   
 }
