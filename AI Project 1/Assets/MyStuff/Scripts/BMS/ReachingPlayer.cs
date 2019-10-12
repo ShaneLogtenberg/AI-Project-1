@@ -11,6 +11,7 @@ public class ReachingPlayer : StateBehaviour
     void OnEnable()
     {
         nPC = GetComponent<AllNPC>();
+        nPC.animator.SetBool("Walk", false);
     }
     // Called when the state is disabled
     void OnDisable()

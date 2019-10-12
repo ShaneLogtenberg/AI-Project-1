@@ -4,23 +4,22 @@ using UnityEngine;
 using BehaviourMachine;
 using UnityEngine.AI;
 
-public class MovingtoPlayer : StateBehaviour
+public class MovingtoFood : StateBehaviour
 {
     AllNPC nPC;
-    public Vector3 playerFront;
-       public void OnEnable()
+
+    public void OnEnable()
     {
         nPC = GetComponent<AllNPC>();
         nPC.agent.speed = 5f;
-        nPC.animator.SetBool("Walk", true);
-        InvokeRepeating("UpdatePlayerPosition", 0, .5f);
+        InvokeRepeating("UpdateFoodPosition", 0, .5f);
     }
-    public void UpdatePlayerPosition(Vector3 curretplayerFront)
+    public void UpdateFoodPosition(Vector3 curretFood)
     {
-        curretplayerFront = nPC.NavMeshLocation(curretplayerFront);
-        nPC.agent.destination = curretplayerFront;
+        nPC.foodThatIsFound.transform.position = curretFood;
+        nPC.agent.destination = nPC.NavMeshLocation(curretFood);
+        nPC.animator.SetBool("Walk", true);
     }
-
 
     // Called when the state is disabled
     void OnDisable()
@@ -34,7 +33,7 @@ public class MovingtoPlayer : StateBehaviour
     {
         nPC.animator.SetFloat("Speed", nPC.agent.velocity.magnitude);
         if (!nPC.agent.pathPending && nPC.agent.remainingDistance < 0.7f)
-            CancelInvoke("UpdatePlayerPosition");
+            CancelInvoke("UpdateFoodPosition");
             SendEvent("REACHPLAYER");
     }
 }

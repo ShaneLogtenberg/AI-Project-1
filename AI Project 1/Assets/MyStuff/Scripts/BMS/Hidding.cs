@@ -12,7 +12,7 @@ public class Hidding : StateBehaviour
     public void OnEnable()
     {
         nPC = GetComponent<AllNPC>();
-        nPC.agent.destination = blackboard.GetVector3Var("Point1").Value;
+        //nPC.agent.destination = blackboard.GetVector3Var("Point1").Value;
         destination = nPC.agent.destination;
         nPC.agent.speed = 5;
     }
