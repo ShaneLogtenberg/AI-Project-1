@@ -8,14 +8,17 @@ public class ShyNPC : AllNPC
 {
     public Vector3[] hiddingSpots;
     public GameObject hiddingSpotsHolder;
+    public Vision playerVision;
     new void Start()
     {
         base.Start();
+        playerVision = player.GetComponent<Player>().vision;
         hiddingSpots = new Vector3[hiddingSpotsHolder.transform.childCount];
         for(int i =0; i < hiddingSpots.Length; i++)
         {
             hiddingSpots[i] = hiddingSpotsHolder.transform.GetChild(i).transform.position;
         }
+        StartCoroutine(Think());
     }
 
     IEnumerator Think()
@@ -28,7 +31,7 @@ public class ShyNPC : AllNPC
                 {
                     //Stay Hidden
                 }
-                else if (!player.GetComponent<Vision>().PointInSight(NavMeshLocation(foodThatIsFound.transform.position)))
+                else if (!playerVision.PointInSight(NavMeshLocation(foodThatIsFound.transform.position)))
                 {
                     if (state.stateName != "MovingToFood" && state.stateName != "Eating")
                     {

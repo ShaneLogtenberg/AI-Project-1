@@ -32,7 +32,7 @@ public class Retreating : StateBehaviour
         Vector3 finalPoint = Vector3.zero;
         Vector3 closestSpot = testedSpots.OrderBy(t => Vector3.Distance(transform.position, t)).FirstOrDefault();
 
-        while (!nPC.player.GetComponent<Vision>().PointInSight(nPC.NavMeshLocation(closestSpot)))
+        while (!nPC.playerVision.PointInSight(nPC.NavMeshLocation(closestSpot)))
         {
             testedSpots = testedSpots.Where(t => t != closestSpot).ToArray();
             closestSpot = testedSpots.OrderBy(t => Vector3.Distance(transform.position, t)).FirstOrDefault();
@@ -41,35 +41,6 @@ public class Retreating : StateBehaviour
         
     }
 
-    //Vector3 ClosestHidingSpot(Vector3[] testedSpots)
-    //{
-    //    Vector3 closestSpot = Vector3.zero;
-    //    float smallestDistance = Mathf.Infinity;
-
-    //    foreach (var testedSpot in testedSpots)
-    //    {
-    //        var tempDist = Vector3.Distance(nPC.agent.destination, testedSpot);
-    //        if (tempDist < smallestDistance)
-    //        {
-    //            smallestDistance = tempDist;
-    //            closestSpot = testedSpot;
-    //        }
-    //    }
-    //    return closestSpot;
-
-    //    //if (testedSpots.Length > 0) {
-    //    //    Vector3 closestSpot = testedSpots[0];
-    //    //    var dist = Vector3.Distance(nPC.agent.destination, testedSpots[0]);
-    //    //    for (var i = 0; i < nPC.hiddingSpots.Length; i++) {
-    //    //        var tempDist = Vector3.Distance(nPC.agent.destination, testedSpots[i]);
-    //    //        if (tempDist < dist) {
-    //    //            closestSpot = nPC.hiddingSpots[i];
-    //    //        }
-    //    //    }
-    //    //    return closestSpot;
-    //    //}
-    //    //return testedSpots[0];
-    //}
 
     // Called when the state is disabled
     void OnDisable()
