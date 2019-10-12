@@ -180,7 +180,7 @@ MonoBehaviour:
   m_Transitions:
   - m_Destination: {fileID: 200254894}
     m_EventID: 350430802
-  m_CachedInstanceID: 12868
+  m_CachedInstanceID: 12878
   destination: {x: 0, y: 0, z: 0}
 --- !u!114 &200254892
 MonoBehaviour:
@@ -203,7 +203,7 @@ MonoBehaviour:
   m_Transitions:
   - m_Destination: {fileID: 200254891}
     m_EventID: 111577421
-  m_CachedInstanceID: 12870
+  m_CachedInstanceID: 12880
 --- !u!195 &200254893
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -249,7 +249,7 @@ MonoBehaviour:
     m_EventID: 690674679
   - m_Destination: {fileID: 200254891}
     m_EventID: 111577421
-  m_CachedInstanceID: 12874
+  m_CachedInstanceID: 12884
   playerBack: {x: 0, y: 0, z: 0}
 --- !u!114 &200254895
 MonoBehaviour:
@@ -270,7 +270,7 @@ MonoBehaviour:
   m_HideScript: 1
   m_Position: {x: 0, y: 0}
   m_Transitions: []
-  m_CachedInstanceID: 12876
+  m_CachedInstanceID: 12886
   m_Description: 
   m_EnabledState: {fileID: 0}
   m_LastEnabledState: {fileID: 0}
@@ -409,7 +409,7 @@ MonoBehaviour:
   m_Transitions:
   - m_Destination: {fileID: 0}
     m_EventID: 1668855374
-  m_CachedInstanceID: 12888
+  m_CachedInstanceID: 12898
   m_CanTransitionToSelf: 0
 --- !u!95 &200254902
 Animator:
@@ -800,7 +800,7 @@ MonoBehaviour:
   m_HideScript: 1
   m_Position: {x: 260, y: 70}
   m_Transitions: []
-  m_CachedInstanceID: 12928
+  m_CachedInstanceID: 12938
   m_CanTransitionToSelf: 0
 --- !u!195 &352336151
 NavMeshAgent:
@@ -845,7 +845,7 @@ MonoBehaviour:
   m_Transitions:
   - m_Destination: {fileID: 352336159}
     m_EventID: 111577421
-  m_CachedInstanceID: 12932
+  m_CachedInstanceID: 12942
   point: {x: 0, y: 0, z: 0}
 --- !u!114 &352336153
 MonoBehaviour:
@@ -866,7 +866,7 @@ MonoBehaviour:
   m_HideScript: 1
   m_Position: {x: 0, y: 0}
   m_Transitions: []
-  m_CachedInstanceID: 12934
+  m_CachedInstanceID: 12944
   m_Description: 
   m_EnabledState: {fileID: 0}
   m_LastEnabledState: {fileID: 0}
@@ -1012,7 +1012,7 @@ MonoBehaviour:
   m_Transitions:
   - m_Destination: {fileID: 352336152}
     m_EventID: 350430802
-  m_CachedInstanceID: 12946
+  m_CachedInstanceID: 12956
   napTime: 0
 --- !u!95 &352336160
 Animator:
@@ -2297,7 +2297,7 @@ MonoBehaviour:
   m_Transitions:
   - m_Destination: {fileID: 1165027504}
     m_EventID: 690674679
-  m_CachedInstanceID: 13062
+  m_CachedInstanceID: 13084
   playerFront: {x: 0, y: 0, z: 0}
 --- !u!114 &1165027500
 MonoBehaviour:
@@ -2320,7 +2320,7 @@ MonoBehaviour:
   m_Transitions:
   - m_Destination: {fileID: 1165027499}
     m_EventID: 111577421
-  m_CachedInstanceID: 13064
+  m_CachedInstanceID: 13086
   point: {x: 0, y: 0, z: 0}
 --- !u!114 &1165027501
 MonoBehaviour:
@@ -2341,7 +2341,7 @@ MonoBehaviour:
   m_HideScript: 1
   m_Position: {x: 0, y: 0}
   m_Transitions: []
-  m_CachedInstanceID: 13066
+  m_CachedInstanceID: 13088
   m_Description: 
   m_EnabledState: {fileID: 0}
   m_LastEnabledState: {fileID: 0}
@@ -2457,7 +2457,7 @@ MonoBehaviour:
     m_EventID: 350430802
   - m_Destination: {fileID: 1165027499}
     m_EventID: 2116191811
-  m_CachedInstanceID: 13072
+  m_CachedInstanceID: 13094
 --- !u!33 &1165027505
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -2543,11 +2543,11 @@ MonoBehaviour:
   m_HideScript: 1
   m_Position: {x: 260, y: 70}
   m_Transitions:
-  - m_Destination: {fileID: 1165027512}
+  - m_Destination: {fileID: 1165027511}
     m_EventID: 2086835765
   - m_Destination: {fileID: 1165027500}
     m_EventID: 2090714997
-  m_CachedInstanceID: 13082
+  m_CachedInstanceID: 13104
   m_CanTransitionToSelf: 0
 --- !u!95 &1165027510
 Animator:
@@ -2585,11 +2585,11 @@ MonoBehaviour:
   m_StateName: MovingtoFood
   m_Color: 0
   m_HideScript: 1
-  m_Position: {x: 280, y: 260}
+  m_Position: {x: 260, y: 200}
   m_Transitions:
   - m_Destination: {fileID: 1165027512}
-    m_EventID: 2116191811
-  m_CachedInstanceID: -1574
+    m_EventID: 690674679
+  m_CachedInstanceID: 13108
 --- !u!114 &1165027512
 MonoBehaviour:
   m_ObjectHideFlags: 2
@@ -2607,11 +2607,11 @@ MonoBehaviour:
   m_StateName: Eating
   m_Color: 0
   m_HideScript: 1
-  m_Position: {x: 270, y: 170}
+  m_Position: {x: 270, y: 350}
   m_Transitions:
   - m_Destination: {fileID: 1165027511}
-    m_EventID: 690674679
-  m_CachedInstanceID: -1572
+    m_EventID: 2116191811
+  m_CachedInstanceID: 13110
 --- !u!1 &1238621431
 GameObject:
   m_ObjectHideFlags: 0

@@ -14,11 +14,17 @@ public class MovingtoFood : StateBehaviour
         nPC.agent.speed = 5f;
         InvokeRepeating("UpdateFoodPosition", 0, .5f);
     }
-    public void UpdateFoodPosition(Vector3 curretFood)
+    public void UpdateFoodPosition()
     {
-        nPC.foodThatIsFound.transform.position = curretFood;
-        nPC.agent.destination = nPC.NavMeshLocation(curretFood);
-        nPC.animator.SetBool("Walk", true);
+        if (nPC.foodThatIsFound != null)
+        {
+            nPC.agent.destination = nPC.NavMeshLocation(nPC.foodThatIsFound.transform.position);
+            nPC.animator.SetBool("Walk", true);
+        }
+        else
+        {
+            SendEvent("NOFOOD");
+        }
     }
 
     // Called when the state is disabled
@@ -32,8 +38,10 @@ public class MovingtoFood : StateBehaviour
     void Update()
     {
         nPC.animator.SetFloat("Speed", nPC.agent.velocity.magnitude);
-        if (!nPC.agent.pathPending && nPC.agent.remainingDistance < 0.7f)
+        if (!nPC.agent.pathPending && nPC.agent.remainingDistance < 0.8f)
+        {
             CancelInvoke("UpdateFoodPosition");
-            SendEvent("REACHPLAYER");
+            SendEvent("INREACH");
+        }
     }
 }

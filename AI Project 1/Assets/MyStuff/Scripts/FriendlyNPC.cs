@@ -17,38 +17,40 @@ public class FriendlyNPC : AllNPC
 
     IEnumerator Think()
     {
-        while (HasFoundFood)
+        while (true)
         {
-            if(foodThatIsFound.transform.parent != null)
+            if (HasFoundFood)
             {
-                if (state.stateName != "MovingToPlayer" && state.stateName != "ReachingPlayer")
+                if (foodThatIsFound.transform.parent != null)
+                {
+                    if (state.stateName != "MovingToPlayer" && state.stateName != "ReachingPlayer")
+                    {
+                        blackboard.SendEvent("INFOCUS");
+                    }
+                }
+                else if (state.stateName != "MovingToFood" && state.stateName != "Eating")
+                {
+                    blackboard.SendEvent("HUNGRY");
+                }
+            }
+
+            if (IsVisiableToPlayer && !HasFoundFood)
+            {
+                if (state.stateName != "MovingToPlayer")
                 {
                     blackboard.SendEvent("INFOCUS");
                 }
             }
-            else if (state.stateName != "MovingToFood" && state.stateName != "Eating")
-            {
-                blackboard.SendEvent("HUNGRY");
-            }
-        }
 
-        while(IsVisiableToPlayer && !HasFoundFood)
-        {
-            if (state.stateName != "MovingToPlayer")
+            if (!HasFoundFood && !IsVisiableToPlayer)
             {
-                blackboard.SendEvent("INFOCUS");
+                if (state.stateName != "Wandering")
+                {
+                    blackboard.SendEvent("OUTFOCUS");
+                }
             }
-        }
 
-        while (!HasFoundFood && !IsVisiableToPlayer)
-        {
-            if (state.stateName != "Wandering")
-            {
-                blackboard.SendEvent("OUTFOCUS");
-            }
+            yield return new WaitForSeconds(1f);
         }
-
-        yield return new WaitForSeconds(1f);
-        yield return null;
     }
 }

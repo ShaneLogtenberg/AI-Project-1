@@ -29,7 +29,7 @@ public class AllNPC : MonoBehaviour
     void Sniff()
     {
         Debug.Log("sniff");
-        if(GameObject.FindGameObjectsWithTag("Food") !=null && foodThatIsFound == null)
+        if(GameObject.FindGameObjectWithTag("Food") !=null && foodThatIsFound == null)
         {
             foodThatIsFound = GameObject.FindGameObjectWithTag("Food");
             HasFoundFood = true;

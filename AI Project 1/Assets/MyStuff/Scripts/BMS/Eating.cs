@@ -36,8 +36,7 @@ public class Eating : StateBehaviour
     // Update is called once per frame
     void Update()
     {
-
-        if (Vector3.Distance(nPC.foodThatIsFound.transform.position, transform.position) < 0.7f)
+        if (Vector3.Distance(nPC.foodThatIsFound.transform.position, transform.position) > 1f)
             SendEvent("OUTREACH");
     }
 }
