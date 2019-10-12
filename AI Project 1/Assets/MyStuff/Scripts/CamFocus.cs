@@ -38,7 +38,7 @@ public class CamFocus : MonoBehaviour
         {
             //Debug.Log("TriggerStay \"" + other.gameObject.name + " \"Object");
             if (other.gameObject.GetComponent<MovingtoPlayer>() != null)
-                other.gameObject.GetComponent<MovingtoPlayer>().UpdatePlayerPosition(playerFront.transform.position);
+                other.gameObject.GetComponent<MovingtoPlayer>().UpdatePlayerPosition();
         }
     }
 

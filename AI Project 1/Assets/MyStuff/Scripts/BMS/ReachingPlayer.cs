@@ -8,15 +8,36 @@ public class ReachingPlayer : StateBehaviour
 {
     AllNPC nPC;
     Vector3 playerFront;
+    Vector3 playerPosition;
+    bool waiting;
     void OnEnable()
     {
         nPC = GetComponent<AllNPC>();
+        nPC.agent.isStopped = true;
         nPC.animator.SetBool("Walk", false);
+        InvokeRepeating("UpdatePlayerPosition", 0, 1f);
     }
     // Called when the state is disabled
+
+    public void UpdatePlayerPosition()
+    {
+        GameObject player = nPC.global.GetGameObjectVar("Player");
+        playerFront = player.transform.GetChild(3).transform.position;
+        playerPosition = player.transform.position;
+    }
     void OnDisable()
     {
-        Debug.Log("Stopped *State*");
+        CancelInvoke("UpdatePlayerPosition");
+        nPC.agent.isStopped = false;
+    }
+
+    IEnumerator Wait()
+    {
+        yield return new WaitForSeconds(2f);
+        Debug.Log("2 secs passed");
+        CancelInvoke("UpdatePlayerPosition");
+        SendEvent("OUTFOCUS");
+        yield break;
     }
 
     // Update is called once per frame
@@ -24,9 +45,24 @@ public class ReachingPlayer : StateBehaviour
     {
         //playerFront = GetComponent<MovingtoPlayer>().playerFront;
         //Vector3 newDir = Vector3.RotateTowards(transform.forward, playerFront-transform.position, agent.speed * Time.deltaTime, 0.0f);
-        Vector3 newDir = Vector3.RotateTowards(transform.forward, Vector3.zero - transform.position, nPC.agent.speed * Time.deltaTime, 0.0f);
+        Vector3 newDir = Vector3.RotateTowards(transform.forward, playerPosition - transform.position, nPC.agent.speed * Time.deltaTime, 0.0f);
         gameObject.transform.rotation = Quaternion.LookRotation(newDir);
-        nPC.agent.destination = blackboard.GetVector3Var("Point1").Value;
+
+        if (Vector3.Distance(playerFront, transform.position) > 1f)
+        {
+            CancelInvoke("UpdatePlayerPosition");
+            SendEvent("OUTREACH");
+        }
+        if (!nPC.IsVisiableToPlayer)
+        {
+            Debug.Log("Line of sight broken");
+            StartCoroutine(Wait());
+        } else
+        {
+            Debug.Log("Line of sight found");
+            StopCoroutine(Wait());
+        }
+               
     }
 }
 

@@ -7,12 +7,20 @@ using UnityEngine.AI;
 public class FriendlyNPC : AllNPC
 {
     public float wanderSpeed;
+    public float remainingDistance;
+    public bool navmeshpending;
     new void Start()
     {
         base.Start();
         wanderSpeed = Random.Range(2f, 3f);
         blackboard.GetFloatVar("Wander Speed").Value = wanderSpeed;
         StartCoroutine(Think());
+    }
+
+    private void Update()
+    {
+        remainingDistance = agent.remainingDistance;
+        navmeshpending = agent.pathPending;
     }
 
     IEnumerator Think()

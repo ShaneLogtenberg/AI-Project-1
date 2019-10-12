@@ -11,21 +11,29 @@ public class MovingtoPlayer : StateBehaviour
        public void OnEnable()
     {
         nPC = GetComponent<AllNPC>();
+        Invoke("GetMoving", .1f);
+    }
+
+    void GetMoving()
+    {
         nPC.agent.speed = 5f;
+        nPC.agent.isStopped = false;
         nPC.animator.SetBool("Walk", true);
         InvokeRepeating("UpdatePlayerPosition", 0, .5f);
     }
-    public void UpdatePlayerPosition(Vector3 curretplayerFront)
+
+    public void UpdatePlayerPosition()
     {
-        curretplayerFront = nPC.NavMeshLocation(curretplayerFront);
-        nPC.agent.destination = curretplayerFront;
+        GameObject player = nPC.global.GetGameObjectVar("Player");
+        playerFront = player.transform.GetChild(3).transform.position;
+        nPC.agent.destination = nPC.NavMeshLocation(playerFront);
     }
 
 
     // Called when the state is disabled
     void OnDisable()
     {
-        nPC.agent.isStopped = true;
+        CancelInvoke("UpdatePlayerPosition");
         nPC.agent.speed = 2f;
     }
 
@@ -34,7 +42,9 @@ public class MovingtoPlayer : StateBehaviour
     {
         nPC.animator.SetFloat("Speed", nPC.agent.velocity.magnitude);
         if (!nPC.agent.pathPending && nPC.agent.remainingDistance < 0.7f)
+        {
             CancelInvoke("UpdatePlayerPosition");
-            SendEvent("REACHPLAYER");
+            SendEvent("INREACH");
+        }
     }
 }

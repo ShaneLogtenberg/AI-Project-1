@@ -6,10 +6,15 @@ using UnityEngine.AI;
 
 public class AllNPC : MonoBehaviour
 {
+    [HideInInspector]
     public NavMeshAgent agent;
+    [HideInInspector]
     public Blackboard blackboard;
+    [HideInInspector]
     public Animator animator;
+    [HideInInspector]
     public GlobalBlackboard global;
+
     public GameObject foodThatIsFound;
     public StateBehaviour state;
 
@@ -23,6 +28,7 @@ public class AllNPC : MonoBehaviour
         animator = GetComponent<Animator>();
         blackboard = GetComponent<Blackboard>();
         state = GetComponent<StateBehaviour>();
+        global = GameObject.Find("GlobalBlackboard").GetComponent<GlobalBlackboard>();
         InvokeRepeating("Sniff",1f,1f);
     }
 

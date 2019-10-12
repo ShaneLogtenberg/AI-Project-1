@@ -7,7 +7,7 @@ using UnityEngine.AI;
 public class Wandering : StateBehaviour
 {
     public Vector3 point;
-    private int destPoint = 0;
+
     AllNPC nPC;
 
     void Start()
@@ -28,15 +28,17 @@ public class Wandering : StateBehaviour
     void GetMoving()
     {
         nPC.agent.autoBraking = false;
+        nPC.agent.isStopped = false;
         nPC.agent.speed = blackboard.GetFloatVar("Wander Speed").Value;
         nPC.animator.SetBool("Walk", true);
+        point = blackboard.GetVector3Var("Destination").Value;
 
         GotoNextPoint();
     }
 
     public Vector3 RandomNavmeshLocation(float radius)
     {
-        Vector3 randomDirection = Random.insideUnitSphere.normalized * radius;
+        Vector3 randomDirection = Quaternion.Euler(0,Random.Range(-90f,90f),0) * Vector3.forward * radius;
         randomDirection += transform.position;
         NavMeshHit hit;
         Vector3 finalPosition = Vector3.zero;
@@ -49,8 +51,12 @@ public class Wandering : StateBehaviour
 
     void GotoNextPoint()
     {
-        point = RandomNavmeshLocation(10f);
-        nPC.agent.SetDestination(point);
+        if (!nPC.agent.pathPending)
+        {
+            point = RandomNavmeshLocation(10f);
+            blackboard.GetVector3Var("Destination").Value = point;
+            nPC.agent.SetDestination(point);
+        }
     }
 
 
@@ -58,8 +64,9 @@ public class Wandering : StateBehaviour
     {
         // Choose the next destination point when the agent gets
         // close to the current one.
-        if (!nPC.agent.pathPending && nPC.agent.remainingDistance < 0.5f)
+
+        if (!nPC.agent.pathPending && nPC.agent.remainingDistance < 1f)
             GotoNextPoint();
-        nPC.agent.isStopped = false;
+
     }
 }
