@@ -12,7 +12,7 @@ public class FriendlyNPC : AllNPC
         base.Start();
         wanderSpeed = Random.Range(2f, 3f);
         blackboard.GetFloatVar("Wander Speed").Value = wanderSpeed;
-        //StartCoroutine(Think());
+        StartCoroutine(Think());
     }
 
     IEnumerator Think()
@@ -49,5 +49,6 @@ public class FriendlyNPC : AllNPC
         }
 
         yield return new WaitForSeconds(1f);
+        yield return null;
     }
 }
