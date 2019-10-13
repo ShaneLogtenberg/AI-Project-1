@@ -16,13 +16,14 @@ public class DebugShowNavMeshPath : MonoBehaviour {
     }
     // Use this for initialization
     void Start() {
-        lineRenderer.SetColors(lineColor, lineColor);
+        lineRenderer.startColor = lineColor;
+        lineRenderer.endColor = lineColor;
         lineRenderer.material = new Material(Shader.Find("Sprites/Default"));
     }
 
     // Update is called once per frame
     void Update() {
-        lineRenderer.SetVertexCount(navMeshAgent.path.corners.Length);
+        lineRenderer.positionCount = navMeshAgent.path.corners.Length;
         for (int i = 0; i < navMeshAgent.path.corners.Length; i++) {
             lineRenderer.SetPosition(i, navMeshAgent.path.corners[i]);
         }

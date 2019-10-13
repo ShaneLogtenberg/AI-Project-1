@@ -11,7 +11,7 @@ public class MovingtoFood : StateBehaviour
     public void OnEnable()
     {
         nPC = GetComponent<AllNPC>();
-        nPC.agent.speed = 5f;
+        //nPC.agent.speed = 5f;
         InvokeRepeating("UpdateFoodPosition", 0, .5f);
     }
     public void UpdateFoodPosition()
@@ -30,6 +30,7 @@ public class MovingtoFood : StateBehaviour
     // Called when the state is disabled
     void OnDisable()
     {
+        CancelInvoke("UpdateFoodPosition");
         nPC.agent.isStopped = true;
         nPC.agent.speed = 2f;
     }
@@ -38,9 +39,8 @@ public class MovingtoFood : StateBehaviour
     void Update()
     {
         nPC.animator.SetFloat("Speed", nPC.agent.velocity.magnitude);
-        if (!nPC.agent.pathPending && nPC.agent.remainingDistance < 1f)
+        if (!nPC.agent.pathPending && nPC.agent.remainingDistance < 1.4f)
         {
-            CancelInvoke("UpdateFoodPosition");
             SendEvent("INREACH");
         }
     }

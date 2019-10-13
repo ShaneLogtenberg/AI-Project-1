@@ -37,7 +37,6 @@ public class AllNPC : MonoBehaviour
 
     void Sniff()
     {
-        Debug.Log("sniff");
         if(GameObject.FindGameObjectWithTag("Food") !=null && foodThatIsFound == null)
         {
             foodThatIsFound = GameObject.FindGameObjectWithTag("Food");

@@ -3,36 +3,38 @@ using System.Collections.Generic;
 using UnityEngine;
 using BehaviourMachine;
 using UnityEngine.AI;
+using System.Linq;
 
-public class MovingtoPlayer : StateBehaviour
+public class SneakingBack : StateBehaviour
 {
-    AllNPC nPC;
-    public Vector3 playerFront;
+    ShyNPC nPC;
+
        public void OnEnable()
     {
-        nPC = GetComponent<AllNPC>();
-        Invoke("GetMoving", .1f);
+        nPC = GetComponent<ShyNPC>();
+        Invoke("Sneak", .1f);
     }
 
-    void GetMoving()
+    void Sneak()
     {
-        nPC.agent.speed = 5f;
         nPC.agent.isStopped = false;
         nPC.animator.SetBool("Walk", true);
-        InvokeRepeating("UpdatePlayerPosition", 0, .5f);
+        Invoke("UpdateHidingSpot", .5f);
     }
 
-    public void UpdatePlayerPosition()
+    public void UpdateHidingSpot()
     {
-        playerFront = nPC.player.transform.GetChild(3).transform.position;
-        nPC.agent.destination = nPC.NavMeshLocation(playerFront);
+        Vector3[] bestSpots = nPC.hiddingSpots.Take(4).ToArray();
+
+        Vector3 closestSpot = bestSpots.OrderBy(t => Vector3.Distance(this.transform.position, t)).FirstOrDefault();
+        nPC.agent.destination = nPC.NavMeshLocation(closestSpot);        
     }
 
 
     // Called when the state is disabled
     void OnDisable()
     {
-        CancelInvoke("UpdatePlayerPosition");
+        CancelInvoke("UpdateHidingSpot");
         nPC.agent.speed = 2f;
     }
 
@@ -42,6 +44,7 @@ public class MovingtoPlayer : StateBehaviour
         nPC.animator.SetFloat("Speed", nPC.agent.velocity.magnitude);
         if (!nPC.agent.pathPending && nPC.agent.remainingDistance < 0.7f)
         {
+            CancelInvoke("UpdateHidingSpot");
             SendEvent("INREACH");
         }
     }

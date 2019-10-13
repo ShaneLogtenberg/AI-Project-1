@@ -9,6 +9,7 @@ public class ShyNPC : AllNPC
     public Vector3[] hiddingSpots;
     public GameObject hiddingSpotsHolder;
     public Vision playerVision;
+    public float remainingDistance;
     new void Start()
     {
         base.Start();

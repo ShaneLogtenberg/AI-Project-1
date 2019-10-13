@@ -9,6 +9,8 @@ public class FriendlyNPC : AllNPC
     public float wanderSpeed;
     public float remainingDistance;
     public bool navmeshpending;
+    public float hungerMeter = 1;
+    public bool hangry = false;
     new void Start()
     {
         base.Start();
@@ -17,11 +19,12 @@ public class FriendlyNPC : AllNPC
         StartCoroutine(Think());
     }
 
+
     IEnumerator Think()
     {
         while (true)
         {
-            if (HasFoundFood)
+            if (HasFoundFood && hangry)
             {
                 if (foodThatIsFound.transform.parent != null)
                 {
@@ -36,7 +39,7 @@ public class FriendlyNPC : AllNPC
                 }
             }
 
-            if (IsVisiableToPlayer && !HasFoundFood)
+            if (IsVisiableToPlayer && !HasFoundFood && hangry)
             {
                 if (state.stateName != "MovingToPlayer")
                 {
@@ -50,6 +53,22 @@ public class FriendlyNPC : AllNPC
                 {
                     blackboard.SendEvent("OUTFOCUS");
                 }
+            }
+
+            if (!hangry)
+            {
+                hungerMeter = hungerMeter - 1 * Time.deltaTime;
+            }
+
+            if (hungerMeter < 0)
+            {
+                hangry = true;
+                hungerMeter = 10;
+            }
+
+            if (state.stateName == "Eating" && hangry)
+            {
+                hangry = false;
             }
 
             yield return new WaitForSeconds(1f);

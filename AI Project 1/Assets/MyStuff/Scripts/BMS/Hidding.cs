@@ -25,7 +25,7 @@ public class Hidding : StateBehaviour
     // Called when the state is disabled
     void OnDisable()
     {
-        
+        nPC.agent.isStopped = false;
     }
 
     // Update is called once per frame

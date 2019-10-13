@@ -8,7 +8,7 @@ using System.Linq;
 public class Retreating : StateBehaviour
 {
     ShyNPC nPC;
-
+    public Vector3 pointDestination;
     Vector3 oppositeDirection;
        public void OnEnable()
     {
@@ -21,24 +21,27 @@ public class Retreating : StateBehaviour
         nPC.agent.speed = 5f;
         nPC.agent.isStopped = false;
         nPC.animator.SetBool("Walk", true);
-        oppositeDirection = (transform.position - nPC.player.transform.position).normalized * 5f;
-        nPC.agent.destination = nPC.NavMeshLocation(oppositeDirection);
-        Invoke("UpdateHidingSpot", .5f);
+        //oppositeDirection = (transform.position - nPC.player.transform.position).normalized * 5f;
+        //pointDestination = nPC.NavMeshLocation(oppositeDirection);
+        //nPC.agent.destination = pointDestination;
+        InvokeRepeating("UpdateHidingSpot", .5f, 1f);
     }
 
     public void UpdateHidingSpot()
     {
-        Vector3[] testedSpots = nPC.hiddingSpots;
-        Vector3 finalPoint = Vector3.zero;
-        Vector3 closestSpot = testedSpots.OrderBy(t => Vector3.Distance(transform.position, t)).FirstOrDefault();
-
-        while (!nPC.playerVision.PointInSight(nPC.NavMeshLocation(closestSpot)))
+        if (nPC.playerVision.PointInSight(nPC.agent.destination))
         {
-            testedSpots = testedSpots.Where(t => t != closestSpot).ToArray();
-            closestSpot = testedSpots.OrderBy(t => Vector3.Distance(transform.position, t)).FirstOrDefault();
-        }
-            nPC.agent.destination = nPC.NavMeshLocation(finalPoint);
-        
+            Vector3[] testedSpots = nPC.hiddingSpots;
+            Vector3 closestSpot = testedSpots.OrderBy(t => Vector3.Distance(transform.position, t)).FirstOrDefault();
+
+            while (nPC.playerVision.PointInSight(closestSpot))
+            {
+                testedSpots = testedSpots.Where(t => t != closestSpot).ToArray();
+                closestSpot = testedSpots.OrderBy(t => Vector3.Distance(transform.position, t)).FirstOrDefault();
+            }
+            pointDestination = nPC.NavMeshLocation(closestSpot);
+            nPC.agent.destination = pointDestination;
+        }        
     }
 
 
@@ -53,10 +56,9 @@ public class Retreating : StateBehaviour
     void Update()
     {
         nPC.animator.SetFloat("Speed", nPC.agent.velocity.magnitude);
-        if (!nPC.agent.pathPending && nPC.agent.remainingDistance < 0.7f)
+        if (!nPC.agent.pathPending && nPC.agent.remainingDistance < 1f)
         {
-            CancelInvoke("UpdateHidingSpot");
-            SendEvent("INREACH");
+            SendEvent("OUTFOUCUS");
         }
     }
 }
