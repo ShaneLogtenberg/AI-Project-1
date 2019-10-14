@@ -19,17 +19,15 @@ public class Retreating : StateBehaviour
     void Run()
     {
         nPC.agent.speed = 5f;
+        nPC.agent.autoBraking = false;
         nPC.agent.isStopped = false;
         nPC.animator.SetBool("Walk", true);
         oppositeDirection = (transform.position - nPC.player.transform.position).normalized * 5f;
         pointDestination = nPC.NavMeshLocation(oppositeDirection);
-        InvokeRepeating("UpdateHidingSpot", 1f, 1f);
     }
 
     public void UpdateHidingSpot()
     {
-        if (nPC.playerVision.PointInSight(nPC.agent.destination))
-        {
             Vector3[] testedSpots = nPC.hiddingSpots;
             Vector3 closestSpot = testedSpots.OrderBy(t => Vector3.Distance(transform.position, t)).FirstOrDefault();
 
@@ -38,18 +36,7 @@ public class Retreating : StateBehaviour
                 testedSpots = testedSpots.Where(t => t != closestSpot).ToArray();
                 closestSpot = testedSpots.OrderBy(t => Vector3.Distance(transform.position, t)).FirstOrDefault();
             }
-            pointDestination = nPC.NavMeshLocation(closestSpot);            
-        }
-        else
-        {
-            if (nPC.agent.destination == nPC.NavMeshLocation(oppositeDirection))
-            {
-                Vector3[] bestSpots = nPC.hiddingSpots.Take(4).ToArray();
-
-                Vector3 closestSpot = bestSpots.OrderBy(t => Vector3.Distance(this.transform.position, t)).FirstOrDefault();
-                pointDestination = nPC.NavMeshLocation(closestSpot);
-            }
-        }
+            pointDestination = closestSpot;            
     }
 
 
@@ -63,13 +50,19 @@ public class Retreating : StateBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (nPC.playerVision.PointInSight(nPC.agent.destination))
+        {
+            UpdateHidingSpot();
+        }
+
         nPC.animator.SetFloat("Speed", nPC.agent.velocity.magnitude);
 
         if (!nPC.agent.pathPending && nPC.agent.destination != pointDestination)
         nPC.agent.destination = pointDestination;
 
-        if (!nPC.agent.pathPending && nPC.agent.remainingDistance < 1f)
+        if (!nPC.agent.pathPending && nPC.agent.remainingDistance < .7f)
         {
+            nPC.agent.autoBraking = true;
             SendEvent("OUTFOUCUS");
         }
     }

@@ -49,13 +49,13 @@ public class ShyNPC : AllNPC
                 }
             }
 
-            if (!HasFoundFood && !IsVisiableToPlayer)
-            {
-                if (state.stateName != "Hidding")
-                {
-                    blackboard.SendEvent("OUTFOCUS");
-                }
-            }
+            //if (!HasFoundFood && !IsVisiableToPlayer)
+            //{
+            //    if (state.stateName != "Hidding")
+            //    {
+            //        blackboard.SendEvent("OUTFOCUS");
+            //    }
+            //}
 
             yield return new WaitForSeconds(2f);
         }

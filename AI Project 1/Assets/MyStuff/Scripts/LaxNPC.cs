@@ -18,39 +18,75 @@ public class LaxNPC : AllNPC
         maxAwakeTime = awakeTime;
         blackboard.GetFloatVar("Wander Speed").Value = wanderSpeed;
         blackboard.GetFloatVar("Nap Time").Value = napTime;
-        InvokeRepeating("CheckTired", 0f, 2f);
+        StartCoroutine(Think());
     }
 
-    void CheckTired()
-    {
-        if (awakeTime < 0)
-        {
-            blackboard.SendEvent("TIRED");
-            awakeTime = 0;
-        }
-    }
-    void NotTiredAnyMore()
+    public void NotTiredAnyMore()
     {
         awakeTime = maxAwakeTime;
     }
     void Update()
     {
-        awakeTime -= 1 * Time.deltaTime;
+        if (awakeTime >= 0)
+        {
+            awakeTime -= 1 * Time.deltaTime;
+        }
     }
 
-    private void OnCollisionStay(Collision collision)
+    //private void OnCollisionStay(Collision collision)
+    //{
+    //    if (agent.speed >= 5)
+    //    {
+    //        if (collision.gameObject.layer == 9)aaaaaaaaaa
+
+    IEnumerator Think()
     {
-        if (agent.speed >= 5)
+        while (true)
         {
-            if (collision.gameObject.layer == 9)
+
+
+            if (HasFoundFood)
             {
-                blackboard.SendEvent("BUMP");
-                collision.gameObject.GetComponent<Blackboard>().SendEvent("BUMP");
+                if (foodThatIsFound.transform.parent != null)
+                {
+                    if (state.stateName != "MovingToPlayer"  && state.stateName != "ReachingPlayer")
+                    {
+                        blackboard.SendEvent("INFOCUS");
+                    }
+                }
+                else if (state.stateName != "MovingToFood" && state.stateName != "Eating")
+                {
+                        blackboard.SendEvent("HUNGRY");
+                }
+                
             }
-        }
-        else
-        {
-            blackboard.SendEvent("BUMP");
+            else if (awakeTime <= 0)
+            {
+                awakeTime = 0;
+                blackboard.SendEvent("TIRED");
+            }
+            else if (state.stateName != "Wandering")
+            {
+                blackboard.SendEvent("NOFOOD");
+            }
+
+            //if (IsVisiableToPlayer && !HasFoundFood)
+            //{
+            //    if (state.stateName != "Retreating")
+            //    {
+            //        blackboard.SendEvent("INFOCUS");
+            //    }
+            //}
+
+            //if (!HasFoundFood && !IsVisiableToPlayer)
+            //{
+            //    if (state.stateName != "Hidding")
+            //    {
+            //        blackboard.SendEvent("OUTFOCUS");
+            //    }
+            //}
+
+            yield return new WaitForSeconds(2f);
         }
     }
 }

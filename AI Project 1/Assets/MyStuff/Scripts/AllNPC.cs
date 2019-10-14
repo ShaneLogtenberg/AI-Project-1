@@ -18,9 +18,11 @@ public class AllNPC : MonoBehaviour
     public GameObject player;
     [HideInInspector]
     public Vision vision;
+    [HideInInspector]
+    public StateBehaviour state;
 
     public GameObject foodThatIsFound;
-    public StateBehaviour state;
+
 
     public bool IsVisiableToPlayer;
     public bool HasFoundFood;

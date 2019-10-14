@@ -24,13 +24,28 @@ public class Napping : StateBehaviour
 
         if (napTime < 0)
         {
-            gameObject.SendMessage("WakeUp");
+            WakeUp();
+        }
+
+        if(nPC.HasFoundFood == true)
+        {
+            WakeUp();
         }
     }
 
     void WakeUp()
     {
         nPC.animator.SetTrigger("Awake");
+        nPC.GetComponent<LaxNPC>().NotTiredAnyMore();
     }
 
+    public void FinishedAnimation()
+    {
+        nPC.blackboard.SendEvent("AWAKENED");
+    }
+
+    private void OnDisable()
+    {
+        nPC.agent.isStopped = false;
+    }
 }

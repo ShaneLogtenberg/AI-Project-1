@@ -88,7 +88,7 @@ public class Vision : MonoBehaviour {
         Physics.Raycast(ray, out hit, 1000);
 
         // see object
-        if (hit.collider.bounds.Contains(testPoint) && meshCollider.bounds.Contains(testPoint))
+        if (hit.collider.bounds.Contains(testPoint) /*&& meshCollider.bounds.Contains(testPoint)*/)
         {
             Debug.DrawLine(owner.transform.position, testPoint, debugSightColor);
             // is visible
