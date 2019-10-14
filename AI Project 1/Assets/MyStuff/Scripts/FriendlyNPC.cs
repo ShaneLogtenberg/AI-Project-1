@@ -18,6 +18,19 @@ public class FriendlyNPC : AllNPC
         blackboard.GetFloatVar("Wander Speed").Value = wanderSpeed;
         StartCoroutine(Think());
     }
+    void Update()
+    {
+        if (!hangry)
+        {
+            hungerMeter = hungerMeter - 1 * Time.deltaTime;
+        }
+
+        if (hungerMeter < 0)
+        {
+            hangry = true;
+            hungerMeter = 10;
+        }
+    }
 
 
     IEnumerator Think()
@@ -53,23 +66,7 @@ public class FriendlyNPC : AllNPC
                 {
                     blackboard.SendEvent("OUTFOCUS");
                 }
-            }
-
-            if (!hangry)
-            {
-                hungerMeter = hungerMeter - 1 * Time.deltaTime;
-            }
-
-            if (hungerMeter < 0)
-            {
-                hangry = true;
-                hungerMeter = 10;
-            }
-
-            if (state.stateName == "Eating" && hangry)
-            {
-                hangry = false;
-            }
+            }           
 
             yield return new WaitForSeconds(1f);
         }

@@ -24,7 +24,12 @@ public class Eating : StateBehaviour
     public void Finished()
     {
         Destroy(nPC.foodThatIsFound);
+        nPC.HasFoundFood = false;
         SendEvent("NOFOOD");
+        if(GetComponent<FriendlyNPC>()!= null)
+        {
+            GetComponent<FriendlyNPC>().hangry = false;
+        }
     }
 
     // Called when the state is disabled

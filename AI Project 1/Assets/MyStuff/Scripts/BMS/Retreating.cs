@@ -21,10 +21,9 @@ public class Retreating : StateBehaviour
         nPC.agent.speed = 5f;
         nPC.agent.isStopped = false;
         nPC.animator.SetBool("Walk", true);
-        //oppositeDirection = (transform.position - nPC.player.transform.position).normalized * 5f;
-        //pointDestination = nPC.NavMeshLocation(oppositeDirection);
-        //nPC.agent.destination = pointDestination;
-        InvokeRepeating("UpdateHidingSpot", .5f, 1f);
+        oppositeDirection = (transform.position - nPC.player.transform.position).normalized * 5f;
+        pointDestination = nPC.NavMeshLocation(oppositeDirection);
+        InvokeRepeating("UpdateHidingSpot", 1f, 1f);
     }
 
     public void UpdateHidingSpot()
@@ -39,9 +38,18 @@ public class Retreating : StateBehaviour
                 testedSpots = testedSpots.Where(t => t != closestSpot).ToArray();
                 closestSpot = testedSpots.OrderBy(t => Vector3.Distance(transform.position, t)).FirstOrDefault();
             }
-            pointDestination = nPC.NavMeshLocation(closestSpot);
-            nPC.agent.destination = pointDestination;
-        }        
+            pointDestination = nPC.NavMeshLocation(closestSpot);            
+        }
+        else
+        {
+            if (nPC.agent.destination == nPC.NavMeshLocation(oppositeDirection))
+            {
+                Vector3[] bestSpots = nPC.hiddingSpots.Take(4).ToArray();
+
+                Vector3 closestSpot = bestSpots.OrderBy(t => Vector3.Distance(this.transform.position, t)).FirstOrDefault();
+                pointDestination = nPC.NavMeshLocation(closestSpot);
+            }
+        }
     }
 
 
@@ -56,6 +64,10 @@ public class Retreating : StateBehaviour
     void Update()
     {
         nPC.animator.SetFloat("Speed", nPC.agent.velocity.magnitude);
+
+        if (!nPC.agent.pathPending && nPC.agent.destination != pointDestination)
+        nPC.agent.destination = pointDestination;
+
         if (!nPC.agent.pathPending && nPC.agent.remainingDistance < 1f)
         {
             SendEvent("OUTFOUCUS");

@@ -16,6 +16,8 @@ public class AllNPC : MonoBehaviour
     public GlobalBlackboard global;
     [HideInInspector]
     public GameObject player;
+    [HideInInspector]
+    public Vision vision;
 
     public GameObject foodThatIsFound;
     public StateBehaviour state;
@@ -32,21 +34,40 @@ public class AllNPC : MonoBehaviour
         state = GetComponent<StateBehaviour>();
         global = GameObject.Find("GlobalBlackboard").GetComponent<GlobalBlackboard>();
         player = global.GetGameObjectVar("Player");
-        InvokeRepeating("Sniff",1f,1f);
+        vision = transform.GetChild(1).GetComponent<Vision>();
+        //InvokeRepeating("Sniff",1f,1f);
     }
 
-    void Sniff()
+    void OnVisionEnter()
     {
-        if(GameObject.FindGameObjectWithTag("Food") !=null && foodThatIsFound == null)
+        if(foodThatIsFound == null)
         {
-            foodThatIsFound = GameObject.FindGameObjectWithTag("Food");
+            foodThatIsFound = vision.visibleObjects[0];
             HasFoundFood = true;
         }
-        else if(foodThatIsFound == null)
+    }
+
+    void OnVisionExit()
+    {
+        if (foodThatIsFound == null)
         {
             HasFoundFood = false;
         }
     }
+
+    //void Sniff()
+    //{
+    //    if(GameObject.FindGameObjectWithTag("Food") !=null && foodThatIsFound == null)
+    //    {
+    //        foodThatIsFound = GameObject.FindGameObjectWithTag("Food");
+    //        HasFoundFood = true;
+    //    }
+
+    //    if (foodThatIsFound == null)
+    //    {
+    //        HasFoundFood = false;
+    //    }
+    //}
 
     public Vector3 NavMeshLocation(Vector3 point)
     {

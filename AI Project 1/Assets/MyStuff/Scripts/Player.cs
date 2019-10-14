@@ -33,11 +33,15 @@ public class Player : MonoBehaviour
 
     void OnVisionExit()
     {
-        for (int i = 0; i < vision.visibleObjects.Count; i++)
+        GameObject[] EveryNPC = GameObject.FindGameObjectsWithTag("Cat");
+        for (int i = 0; i < EveryNPC.Length; i++)
         {
-            if (vision.visibleObjects[i].GetComponent<AllNPC>().IsVisiableToPlayer == true)
+            if (!vision.visibleObjects.Contains(EveryNPC[i]))
             {
-                vision.visibleObjects[i].GetComponent<AllNPC>().IsVisiableToPlayer = false;
+                if (EveryNPC[i].GetComponent<AllNPC>().IsVisiableToPlayer == true)
+                {
+                    EveryNPC[i].GetComponent<AllNPC>().IsVisiableToPlayer = false;
+                }
             }
         }
     }

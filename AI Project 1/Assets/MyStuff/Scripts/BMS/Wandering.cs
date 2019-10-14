@@ -38,8 +38,13 @@ public class Wandering : StateBehaviour
 
     public Vector3 RandomNavmeshLocation(float radius)
     {
-        Vector3 randomDirection = Quaternion.Euler(0,Random.Range(-90f,90f),0) * Vector3.forward * radius;
+
+        Vector3 randomDirection = Quaternion.Euler(0,Random.Range(-45f,45f),0) * transform.forward * radius;
         randomDirection += transform.position;
+        if (GameObject.Find("Bounds").GetComponent<Collider>().bounds.Contains(randomDirection))
+        {
+            randomDirection = randomDirection + ((Vector3.zero - randomDirection).normalized * (Vector3.zero - randomDirection).magnitude/2);
+        }
         NavMeshHit hit;
         Vector3 finalPosition = Vector3.zero;
         if (NavMesh.SamplePosition(randomDirection, out hit, radius, 1))
@@ -68,5 +73,7 @@ public class Wandering : StateBehaviour
         if (!nPC.agent.pathPending && nPC.agent.remainingDistance < 1f)
             GotoNextPoint();
 
+        Debug.DrawLine(transform.position, transform.position + (Quaternion.Euler(0, -45f, 0) * transform.forward * 10), Color.yellow);
+        Debug.DrawLine(transform.position, transform.position + (Quaternion.Euler(0, 45f, 0) * transform.forward * 10), Color.yellow);
     }
 }
