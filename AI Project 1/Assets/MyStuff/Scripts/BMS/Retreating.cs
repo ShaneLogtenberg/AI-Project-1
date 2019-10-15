@@ -28,14 +28,14 @@ public class Retreating : StateBehaviour
 
     public void UpdateHidingSpot()
     {
-            Vector3[] testedSpots = nPC.hiddingSpots;
-            Vector3 closestSpot = testedSpots.OrderBy(t => Vector3.Distance(transform.position, t)).FirstOrDefault();
+        Vector3[] testedSpots = nPC.hiddingSpots;
+        Vector3 closestSpot = testedSpots.OrderBy(t => Vector3.Distance(nPC.player.transform.position, t)).LastOrDefault();
 
             while (nPC.playerVision.PointInSight(closestSpot))
             {
                 testedSpots = testedSpots.Where(t => t != closestSpot).ToArray();
-                closestSpot = testedSpots.OrderBy(t => Vector3.Distance(transform.position, t)).FirstOrDefault();
-            }
+                closestSpot = testedSpots.OrderBy(t => Vector3.Distance(nPC.player.transform.position, t)).LastOrDefault();
+        }
             pointDestination = closestSpot;            
     }
 
