@@ -10,6 +10,7 @@ public class Retreating : StateBehaviour
     ShyNPC nPC;
     public Vector3 pointDestination;
     Vector3 oppositeDirection;
+    bool hideNotRun;
        public void OnEnable()
     {
         nPC = GetComponent<ShyNPC>();
@@ -18,27 +19,39 @@ public class Retreating : StateBehaviour
 
     void Run()
     {
+        hideNotRun = false;
         nPC.agent.speed = 5f;
         nPC.agent.autoBraking = false;
         nPC.agent.isStopped = false;
         nPC.animator.SetBool("Walk", true);
-        oppositeDirection = (transform.position - nPC.player.transform.position).normalized * 5f;
-        pointDestination = nPC.NavMeshLocation(oppositeDirection);
+        RunOppositeDirection();
+    }
+
+    void RunOppositeDirection()
+    {
+        oppositeDirection = (nPC.player.transform.position - transform.position).normalized * -5f;
+        pointDestination = transform.position + oppositeDirection;
+
     }
 
     public void UpdateHidingSpot()
     {
-        Vector3[] testedSpots = nPC.hiddingSpots;
-        Vector3 closestSpot = testedSpots.OrderBy(t => Vector3.Distance(nPC.player.transform.position, t)).LastOrDefault();
+        hideNotRun = true;
+        GameObject[] testedSpots = nPC.hiddingSpots;
+        GameObject closestSpot = testedSpots.OrderBy(t => Vector3.Distance(transform.position, t.transform.position)).FirstOrDefault();
 
             while (nPC.playerVision.PointInSight(closestSpot))
             {
                 testedSpots = testedSpots.Where(t => t != closestSpot).ToArray();
-                closestSpot = testedSpots.OrderBy(t => Vector3.Distance(nPC.player.transform.position, t)).LastOrDefault();
-        }
-            pointDestination = closestSpot;            
+                closestSpot = testedSpots.OrderBy(t => Vector3.Distance(transform.position, t.transform.position)).FirstOrDefault();
+            }
+            pointDestination = closestSpot.transform.position;            
     }
 
+    public void UpdatePath()
+    {
+
+    }
 
     // Called when the state is disabled
     void OnDisable()
@@ -50,20 +63,30 @@ public class Retreating : StateBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (nPC.playerVision.PointInSight(nPC.agent.destination))
-        {
-            UpdateHidingSpot();
-        }
+        //if (!nPC.agent.pathPending && nPC.playerVision.PointInSight(nPC.agent.destination))
+        //{
+        //    if (hideNotRun)
+        //    {
+        //        RunOppositeDirection();
+        //    }
+        //}
+        Debug.DrawLine(transform.position, pointDestination);
 
         nPC.animator.SetFloat("Speed", nPC.agent.velocity.magnitude);
 
-        if (!nPC.agent.pathPending && nPC.agent.destination != pointDestination)
         nPC.agent.destination = pointDestination;
 
         if (!nPC.agent.pathPending && nPC.agent.remainingDistance < .7f)
         {
-            nPC.agent.autoBraking = true;
-            SendEvent("OUTFOUCUS");
+            if (hideNotRun)
+            {
+                nPC.agent.autoBraking = true;
+                SendEvent("OUTFOCUS");
+            }
+            else
+            {
+                UpdateHidingSpot();
+            }
         }
     }
 }

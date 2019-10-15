@@ -6,7 +6,7 @@ using UnityEngine.AI;
 
 public class ShyNPC : AllNPC
 {
-    public Vector3[] hiddingSpots;
+    public GameObject[] hiddingSpots;
     public GameObject hiddingSpotsHolder;
     public Vision playerVision;
     public float remainingDistance;
@@ -14,10 +14,10 @@ public class ShyNPC : AllNPC
     {
         base.Start();
         playerVision = player.GetComponent<Player>().vision;
-        hiddingSpots = new Vector3[hiddingSpotsHolder.transform.childCount];
+        hiddingSpots = new GameObject[hiddingSpotsHolder.transform.childCount];
         for(int i =0; i < hiddingSpots.Length; i++)
         {
-            hiddingSpots[i] = hiddingSpotsHolder.transform.GetChild(i).transform.position;
+            hiddingSpots[i] = hiddingSpotsHolder.transform.GetChild(i).gameObject;
         }
         StartCoroutine(Think());
     }
@@ -32,7 +32,7 @@ public class ShyNPC : AllNPC
                 {
                     //Stay Hidden
                 }
-                else if (!playerVision.PointInSight(NavMeshLocation(foodThatIsFound.transform.position)))
+                else if (!playerVision.PointInSight(foodThatIsFound))
                 {
                     if (state.stateName != "MovingToFood" && state.stateName != "Eating")
                     {

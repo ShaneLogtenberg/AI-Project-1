@@ -18,6 +18,7 @@ public class Eating : StateBehaviour
     private void Eat()
     {
         nPC.agent.isStopped = true;
+        nPC.foodThatIsFound.transform.parent = this.gameObject.transform;
         nPC.animator.SetTrigger("Eat");
     }
 
@@ -44,8 +45,8 @@ public class Eating : StateBehaviour
         if (nPC.foodThatIsFound != null)
         {
             Vector3 newDir = Vector3.RotateTowards(transform.forward, nPC.foodThatIsFound.transform.position - transform.position, nPC.agent.speed * Time.deltaTime, 0.0f);
-            if (Vector3.Distance(nPC.foodThatIsFound.transform.position, transform.position) > 1.6f)
-                SendEvent("OUTREACH");
+            //if (Vector3.Distance(nPC.foodThatIsFound.transform.position, transform.position) > 1.6f)
+            //    SendEvent("OUTREACH");
         }
     }
 }

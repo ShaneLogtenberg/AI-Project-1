@@ -24,10 +24,10 @@ public class SneakingBack : StateBehaviour
 
     public void UpdateHidingSpot()
     {
-        Vector3[] bestSpots = nPC.hiddingSpots.Take(4).ToArray();
+        GameObject[] bestSpots = nPC.hiddingSpots.Take(4).ToArray();
 
-        Vector3 closestSpot = bestSpots.OrderBy(t => Vector3.Distance(this.transform.position, t)).FirstOrDefault();
-        nPC.agent.destination = nPC.NavMeshLocation(closestSpot);        
+        GameObject closestSpot = bestSpots.OrderBy(t => Vector3.Distance(this.transform.position, t.transform.position)).FirstOrDefault();
+        nPC.agent.destination = nPC.NavMeshLocation(closestSpot.transform.position);        
     }
 
 
