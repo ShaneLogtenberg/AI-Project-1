@@ -39,7 +39,7 @@ public class MovingtoFood : StateBehaviour
     void Update()
     {
         nPC.animator.SetFloat("Speed", nPC.agent.velocity.magnitude);
-        if (!nPC.agent.pathPending && nPC.agent.remainingDistance < 1.4f)
+        if (!nPC.agent.pathPending && nPC.agent.remainingDistance < 1f)
         {
             SendEvent("INREACH");
         }

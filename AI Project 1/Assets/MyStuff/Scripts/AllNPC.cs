@@ -36,7 +36,7 @@ public class AllNPC : MonoBehaviour
         state = GetComponent<StateBehaviour>();
         global = GameObject.Find("GlobalBlackboard").GetComponent<GlobalBlackboard>();
         player = global.GetGameObjectVar("Player");
-        vision = transform.GetChild(1).GetComponent<Vision>();
+        vision = transform.GetComponentInChildren<Vision>();
         //InvokeRepeating("Sniff",1f,1f);
     }
 
