@@ -41,7 +41,7 @@ public class Napping : StateBehaviour
         nPC.GetComponent<LaxNPC>().NotTiredAnyMore();
     }
 
-    public void Finished()
+    public void FinishedAnimation()
     {
         nPC.blackboard.SendEvent("AWAKENED");
     }
