@@ -30,7 +30,8 @@ public class Retreating : StateBehaviour
     void RunOppositeDirection()
     {
         oppositeDirection = (nPC.player.transform.position - transform.position).normalized * -5f;
-        pointDestination = transform.position + oppositeDirection;
+        oppositeDirection.y = 0;
+        pointDestination = nPC.NavMeshLocation(transform.position + oppositeDirection);
 
     }
 
@@ -45,7 +46,7 @@ public class Retreating : StateBehaviour
                 testedSpots = testedSpots.Where(t => t != closestSpot).ToArray();
                 closestSpot = testedSpots.OrderBy(t => Vector3.Distance(transform.position, t.transform.position)).FirstOrDefault();
             }
-            pointDestination = closestSpot.transform.position;            
+            pointDestination = nPC.NavMeshLocation(closestSpot.transform.position);            
     }
 
     public void UpdatePath()

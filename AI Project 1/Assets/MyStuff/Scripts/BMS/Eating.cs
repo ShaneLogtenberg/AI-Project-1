@@ -46,6 +46,8 @@ public class Eating : StateBehaviour
         if (nPC.foodThatIsFound != null)
         {
             Vector3 newDir = Vector3.RotateTowards(transform.forward, nPC.foodThatIsFound.transform.position - transform.position, nPC.agent.speed * Time.deltaTime, 0.0f);
+            gameObject.transform.rotation = Quaternion.LookRotation(newDir);
+
             if (Vector3.Distance(nPC.foodThatIsFound.transform.position, transform.position) > 1f)
             {
                 nPC.animator.SetBool("Walk", true);

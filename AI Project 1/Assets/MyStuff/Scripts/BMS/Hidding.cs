@@ -33,5 +33,11 @@ public class Hidding : StateBehaviour
     {
         if (!nPC.agent.pathPending && nPC.agent.remainingDistance < 0.7f)
             nPC.agent.isStopped = true;
+
+        if (nPC.IsVisiableToPlayer)
+        {
+            Vector3 newDir = Vector3.RotateTowards(transform.forward, nPC.player.transform.position, nPC.agent.speed * Time.deltaTime, 0.0f);
+            gameObject.transform.rotation = Quaternion.LookRotation(newDir);
+        }
     }
 }

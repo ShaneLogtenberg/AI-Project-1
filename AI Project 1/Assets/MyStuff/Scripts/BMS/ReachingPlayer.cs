@@ -48,18 +48,18 @@ public class ReachingPlayer : StateBehaviour
         Vector3 newDir = Vector3.RotateTowards(transform.forward, playerPosition - transform.position, nPC.agent.speed * Time.deltaTime, 0.0f);
         gameObject.transform.rotation = Quaternion.LookRotation(newDir);
 
-        if (Vector3.Distance(playerFront, transform.position) > 1f)
+        if (Vector3.Distance(playerFront, transform.position) > 2f)
         {
             CancelInvoke("UpdatePlayerPosition");
             SendEvent("OUTREACH");
         }
-        if (!nPC.IsVisiableToPlayer)
-        {
-            StartCoroutine(Wait());
-        } else
-        {
-            StopCoroutine(Wait());
-        }
+        //if (!nPC.IsVisiableToPlayer)
+        //{
+        //    StartCoroutine(Wait());
+        //} else
+        //{
+        //    StopCoroutine(Wait());
+        //}
                
     }
 }
