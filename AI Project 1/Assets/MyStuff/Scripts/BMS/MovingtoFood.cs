@@ -7,7 +7,6 @@ using UnityEngine.AI;
 public class MovingtoFood : StateBehaviour
 {
     AllNPC nPC;
-
     public void OnEnable()
     {
         nPC = GetComponent<AllNPC>();
@@ -39,7 +38,7 @@ public class MovingtoFood : StateBehaviour
     void Update()
     {
         nPC.animator.SetFloat("Speed", nPC.agent.velocity.magnitude);
-        if (!nPC.agent.pathPending && nPC.agent.remainingDistance < 1f)
+        if (!nPC.agent.pathPending && nPC.agent.remainingDistance < 0.7f)
         {
             SendEvent("INREACH");
         }

@@ -47,18 +47,21 @@ public class LaxNPC : AllNPC
 
             if (HasFoundFood)
             {
-                if (foodThatIsFound.transform.parent != null)
+
+                if (foodThatIsFound.transform.parent == player.transform)
                 {
-                    if (state.stateName != "MovingToPlayer"  && state.stateName != "ReachingPlayer")
-                    {
-                        blackboard.SendEvent("INFOCUS");
-                    }
+                    //if (state.stateName != "MovingtoPlayer" && state.stateName != "ReachingPlayer")
+                    //{
+                    blackboard.SendEvent("INFOCUS");
+                    //}
                 }
-                else if (state.stateName != "MovingToFood" && state.stateName != "Eating")
+                else
+                //if (state.stateName != "MovingtoFood" && state.stateName != "Eating")
                 {
-                        blackboard.SendEvent("HUNGRY");
+                    blackboard.SendEvent("HUNGRY");
                 }
-                
+
+
             }
             else if (awakeTime <= 0)
             {

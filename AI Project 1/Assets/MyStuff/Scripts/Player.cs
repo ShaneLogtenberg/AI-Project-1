@@ -53,7 +53,7 @@ public class Player : MonoBehaviour
         {
             SpawnFood();
         }
-        else
+        else if(foodInHand != null)
         {
             DropFood();
         }
@@ -61,12 +61,9 @@ public class Player : MonoBehaviour
 
     private void DropFood()
     {
-        if (foodInHand != null)
-        {
             foodInHand.GetComponent<Rigidbody>().isKinematic = false;
             foodInHand.transform.parent = null;
             foodInHand = null;
-        }
     }
 
     private void SpawnFood()

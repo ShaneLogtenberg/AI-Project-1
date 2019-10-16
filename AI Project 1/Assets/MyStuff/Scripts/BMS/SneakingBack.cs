@@ -19,15 +19,15 @@ public class SneakingBack : StateBehaviour
     {
         nPC.agent.isStopped = false;
         nPC.animator.SetBool("Walk", true);
-        Invoke("UpdateHidingSpot", .5f);
+        Invoke("UpdateHidingSpot", 0);
     }
 
     public void UpdateHidingSpot()
     {
-        GameObject[] bestSpots = nPC.hiddingSpots.Take(4).ToArray();
+        GameObject[] testedSpots = nPC.hiddingSpots;
+        GameObject closestSpot = testedSpots.OrderBy(t => Vector3.Distance(transform.position, t.transform.position)).FirstOrDefault();
 
-        GameObject closestSpot = bestSpots.OrderBy(t => Vector3.Distance(this.transform.position, t.transform.position)).FirstOrDefault();
-        nPC.agent.destination = nPC.NavMeshLocation(closestSpot.transform.position);        
+        nPC.agent.destination = closestSpot.transform.position;        
     }
 
 

@@ -81,7 +81,7 @@ public class Retreating : StateBehaviour
             if (hideNotRun)
             {
                 nPC.agent.autoBraking = true;
-                SendEvent("OUTFOCUS");
+                SendEvent("INREACH");
             }
             else
             {

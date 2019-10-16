@@ -15,6 +15,7 @@ public class ReachingPlayer : StateBehaviour
         nPC = GetComponent<AllNPC>();
         nPC.agent.isStopped = true;
         nPC.animator.SetBool("Walk", false);
+        nPC.animator.SetTrigger("Meow");
         InvokeRepeating("UpdatePlayerPosition", 0, 1f);
     }
     // Called when the state is disabled

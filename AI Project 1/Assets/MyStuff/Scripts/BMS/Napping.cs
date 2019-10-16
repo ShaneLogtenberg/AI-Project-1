@@ -9,6 +9,7 @@ public class Napping : StateBehaviour
     AllNPC nPC;
     Transform body;
     public float napTime;
+    bool wakingUp;
 
     private void OnEnable()
     {
@@ -22,7 +23,7 @@ public class Napping : StateBehaviour
     {
         napTime -= 1 * Time.deltaTime;
 
-        if (napTime < 0)
+        if (napTime < 0 && !wakingUp)
         {
             WakeUp();
         }
@@ -35,11 +36,12 @@ public class Napping : StateBehaviour
 
     void WakeUp()
     {
+        wakingUp = true;
         nPC.animator.SetTrigger("Awake");
         nPC.GetComponent<LaxNPC>().NotTiredAnyMore();
     }
 
-    public void FinishedAnimation()
+    public void Finished()
     {
         nPC.blackboard.SendEvent("AWAKENED");
     }

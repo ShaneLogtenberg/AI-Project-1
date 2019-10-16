@@ -9,6 +9,7 @@ public class FriendlyNPC : AllNPC
     public float wanderSpeed;
     public float remainingDistance;
     public bool navmeshpending;
+    public float maxHungerMeter = 10;
     public float hungerMeter = 1;
     public bool hangry = false;
     new void Start()
@@ -27,11 +28,15 @@ public class FriendlyNPC : AllNPC
 
         if (hungerMeter < 0)
         {
-            hangry = true;
-            hungerMeter = 10;
+            hangry = true;            
         }
     }
 
+    public void Fed()
+    {
+        hungerMeter = maxHungerMeter;
+        hangry = false;
+    }
 
     IEnumerator Think()
     {
@@ -39,14 +44,15 @@ public class FriendlyNPC : AllNPC
         {
             if (HasFoundFood && hangry)
             {
-                if (foodThatIsFound.transform.parent != null)
+                if (foodThatIsFound.transform.parent == player.transform)
                 {
-                    if (state.stateName != "MovingToPlayer" && state.stateName != "ReachingPlayer")
-                    {
+                    //if (state.stateName != "MovingtoPlayer" && state.stateName != "ReachingPlayer")
+                    //{
                         blackboard.SendEvent("INFOCUS");
-                    }
+                    //}
                 }
-                else if (state.stateName != "MovingToFood" && state.stateName != "Eating")
+                else 
+                //if (state.stateName != "MovingtoFood" && state.stateName != "Eating")
                 {
                     blackboard.SendEvent("HUNGRY");
                 }
@@ -54,13 +60,13 @@ public class FriendlyNPC : AllNPC
 
             if (IsVisiableToPlayer && !HasFoundFood && hangry)
             {
-                if (state.stateName != "MovingToPlayer")
-                {
+                //if (state.stateName != "MovingtoPlayer" && state.stateName != "ReachingPlayer")
+                //{
                     blackboard.SendEvent("INFOCUS");
-                }
+                //}
             }
 
-            if (!HasFoundFood && !IsVisiableToPlayer)
+            if (!HasFoundFood && !IsVisiableToPlayer && !hangry)
             {
                 if (state.stateName != "Wandering")
                 {
@@ -68,7 +74,7 @@ public class FriendlyNPC : AllNPC
                 }
             }           
 
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(2f);
         }
     }
 }
