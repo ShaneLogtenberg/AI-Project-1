@@ -34,7 +34,6 @@ public class ReachingPlayer : StateBehaviour
     IEnumerator Wait()
     {
         yield return new WaitForSeconds(2f);
-        Debug.Log("2 secs passed");
         CancelInvoke("UpdatePlayerPosition");
         SendEvent("OUTFOCUS");
         yield break;
@@ -55,11 +54,9 @@ public class ReachingPlayer : StateBehaviour
         }
         if (!nPC.IsVisiableToPlayer)
         {
-            Debug.Log("Line of sight broken");
             StartCoroutine(Wait());
         } else
         {
-            Debug.Log("Line of sight found");
             StopCoroutine(Wait());
         }
                
