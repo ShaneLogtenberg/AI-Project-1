@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using BehaviourMachine;
 using UnityEngine.AI;
-using System;
 
 public class Eating : StateBehaviour
 {
@@ -19,7 +18,8 @@ public class Eating : StateBehaviour
     {
         nPC.agent.isStopped = true;
         nPC.animator.SetBool("Walk",false);
-        nPC.foodThatIsFound.GetComponent<Rigidbody>().velocity = Vector3.zero;
+        if(nPC.foodThatIsFound != null)
+            nPC.foodThatIsFound.GetComponent<Rigidbody>().velocity = Vector3.zero;
         nPC.animator.SetTrigger("Eat");
     }
 

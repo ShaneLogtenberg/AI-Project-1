@@ -77,6 +77,14 @@ public class AllNPC : MonoBehaviour
     //        HasFoundFood = false;
     //    }
     //}
+    void Update()
+    {
+        if (awakeTime >= 0)
+        {
+            awakeTime -= 1 * Time.deltaTime;
+        }
+    }
+
 
     public Vector3 NavMeshLocation(Vector3 point)
     {

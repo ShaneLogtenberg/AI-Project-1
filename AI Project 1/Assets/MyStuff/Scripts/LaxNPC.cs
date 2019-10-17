@@ -15,13 +15,7 @@ public class LaxNPC : AllNPC
     }
 
 
-    void Update()
-    {
-        if (awakeTime >= 0)
-        {
-            awakeTime -= 1 * Time.deltaTime;
-        }
-    }
+
 
     //private void OnCollisionStay(Collision collision)
     //{

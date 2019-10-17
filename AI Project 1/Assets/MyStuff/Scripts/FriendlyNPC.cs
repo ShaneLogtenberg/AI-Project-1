@@ -27,16 +27,19 @@ public class FriendlyNPC : AllNPC
         {
             isHungry = true;            
         }
-
-        
     }
 
     public void Fed()
     {
-        hungerMeter = maxHungerMeter;
         blackboard.SendEvent("TIRED");
+    }
+
+    public void ResetHunger()
+    {
+        hungerMeter = maxHungerMeter;
         isHungry = false;
     }
+
 
     IEnumerator Think()
     {

@@ -43,6 +43,10 @@ public class Napping : StateBehaviour
 
     public void FinishedAnimation()
     {
+        if (GetComponent<FriendlyNPC>() != null)
+        {
+            GetComponent<FriendlyNPC>().ResetHunger();
+        }
         nPC.blackboard.SendEvent("AWAKENED");
     }
 
