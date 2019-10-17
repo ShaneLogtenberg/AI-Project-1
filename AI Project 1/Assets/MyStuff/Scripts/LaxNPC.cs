@@ -6,25 +6,15 @@ using UnityEngine.AI;
 
 public class LaxNPC : AllNPC
 {
-    public float wanderSpeed;
-    public float napTime;
-    public float awakeTime;
-    float maxAwakeTime;
     new void Start()
     {
         base.Start();
         wanderSpeed = Random.Range(1f, 2f);
-        //napTime = Random.Range(3f, 5f);
-        maxAwakeTime = awakeTime;
-        blackboard.GetFloatVar("Wander Speed").Value = wanderSpeed;
-        blackboard.GetFloatVar("Nap Time").Value = napTime;
+        napTime += Random.Range(-3f, 3f);
         StartCoroutine(Think());
     }
 
-    public void NotTiredAnyMore()
-    {
-        awakeTime = maxAwakeTime;
-    }
+
     void Update()
     {
         if (awakeTime >= 0)
@@ -37,15 +27,13 @@ public class LaxNPC : AllNPC
     //{
     //    if (agent.speed >= 5)
     //    {
-    //        if (collision.gameObject.layer == 9)aaaaaaaaaa
+    //        if (collision.gameObject.layer == 9)
 
     IEnumerator Think()
     {
         while (true)
         {
-
-
-            if (HasFoundFood)
+            if (HasFoundFood && foodThatIsFound != null)
             {
 
                 if (foodThatIsFound.transform.parent == player.transform)
@@ -61,7 +49,6 @@ public class LaxNPC : AllNPC
                     blackboard.SendEvent("HUNGRY");
                 }
 
-
             }
             else if (awakeTime <= 0)
             {
@@ -72,22 +59,6 @@ public class LaxNPC : AllNPC
             {
                 blackboard.SendEvent("NOFOOD");
             }
-
-            //if (IsVisiableToPlayer && !HasFoundFood)
-            //{
-            //    if (state.stateName != "Retreating")
-            //    {
-            //        blackboard.SendEvent("INFOCUS");
-            //    }
-            //}
-
-            //if (!HasFoundFood && !IsVisiableToPlayer)
-            //{
-            //    if (state.stateName != "Hidding")
-            //    {
-            //        blackboard.SendEvent("OUTFOCUS");
-            //    }
-            //}
 
             yield return new WaitForSeconds(2f);
         }

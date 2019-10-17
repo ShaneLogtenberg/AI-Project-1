@@ -32,7 +32,6 @@ public class Retreating : StateBehaviour
         oppositeDirection = (nPC.player.transform.position - transform.position).normalized * -5f;
         oppositeDirection.y = 0;
         pointDestination = nPC.NavMeshLocation(transform.position + oppositeDirection);
-
     }
 
     public void UpdateHidingSpot()

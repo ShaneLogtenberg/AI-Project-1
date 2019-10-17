@@ -411,7 +411,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5593055392682160786}
-  m_LocalRotation: {x: -0, y: 0.9999933, z: -0, w: -0.003657635}
+  m_LocalRotation: {x: 0, y: 0.9999934, z: -0, w: -0.003656304}
   m_LocalPosition: {x: 4.15, y: -0.509, z: 4.35}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -461,7 +461,7 @@ LineRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5593055392682160786}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -557,12 +557,12 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5593055392682160786}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cd02a8960e96cfd49b1e4ec64ce85945, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lineColor: {r: 1, g: 0, b: 0, a: 0.39215687}
+  lineColor: {r: 0.039443612, g: 1, b: 0, a: 0.39215687}
 --- !u!114 &5593055392682160787
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -585,9 +585,10 @@ MonoBehaviour:
   foodThatIsFound: {fileID: 0}
   IsVisiableToPlayer: 0
   HasFoundFood: 0
-  wanderSpeed: 0
-  napTime: 5
+  wanderSpeed: 2
+  napTime: 20
   awakeTime: 10
+  maxAwakeTime: 0
 --- !u!114 &5593055392762647707
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -607,7 +608,7 @@ MonoBehaviour:
   m_HideScript: 1
   m_Position: {x: 0, y: 0}
   m_Transitions: []
-  m_CachedInstanceID: -272718
+  m_CachedInstanceID: -34014
   m_Description: 
   m_EnabledState: {fileID: 0}
   m_LastEnabledState: {fileID: 0}
@@ -626,17 +627,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 634db10235c0241d6ad43433a106016d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_FloatVars:
-  - m_ID: 2042281531
-    m_Name: Wander Speed
-    m_Blackboard: {fileID: 5593055392762647708}
-    m_IsConstant: 0
-    value: 0
-  - m_ID: 422694868
-    m_Name: Nap Time
-    m_Blackboard: {fileID: 5593055392762647708}
-    m_IsConstant: 0
-    value: 0
+  m_FloatVars: []
   m_IntVars: []
   m_BoolVars: []
   m_StringVars: []
@@ -743,7 +734,7 @@ MonoBehaviour:
   m_HideScript: 1
   m_Position: {x: 110, y: 30}
   m_Transitions: []
-  m_CachedInstanceID: -272724
+  m_CachedInstanceID: -34020
   m_CanTransitionToSelf: 0
 --- !u!114 &5593055392762647703
 MonoBehaviour:
@@ -770,7 +761,7 @@ MonoBehaviour:
     m_EventID: 2086835765
   - m_Destination: {fileID: 5593055392682160797}
     m_EventID: 1215252921
-  m_CachedInstanceID: -272726
+  m_CachedInstanceID: -34022
   point: {x: 0, y: 0, z: 0}
 --- !u!114 &1103790688585438773
 MonoBehaviour:
@@ -793,7 +784,7 @@ MonoBehaviour:
   m_Transitions:
   - m_Destination: {fileID: 1103790688585438774}
     m_EventID: 2116191811
-  m_CachedInstanceID: -272728
+  m_CachedInstanceID: -34024
 --- !u!114 &1103790688585438774
 MonoBehaviour:
   m_ObjectHideFlags: 2
@@ -815,7 +806,7 @@ MonoBehaviour:
   m_Transitions:
   - m_Destination: {fileID: 1103790688585438773}
     m_EventID: 690674679
-  m_CachedInstanceID: -272730
+  m_CachedInstanceID: -34026
 --- !u!114 &1103790688585438760
 MonoBehaviour:
   m_ObjectHideFlags: 2
@@ -837,7 +828,7 @@ MonoBehaviour:
   m_Transitions:
   - m_Destination: {fileID: 5593055392762647703}
     m_EventID: 2090714997
-  m_CachedInstanceID: -272732
+  m_CachedInstanceID: -34028
   m_Description: 
   m_EnabledState: {fileID: 0}
   m_LastEnabledState: {fileID: 0}
@@ -865,7 +856,7 @@ MonoBehaviour:
   m_Transitions:
   - m_Destination: {fileID: 1103790688585438755}
     m_EventID: 690674679
-  m_CachedInstanceID: -272734
+  m_CachedInstanceID: -34030
   playerFront: {x: 0, y: 0, z: 0}
 --- !u!114 &1103790688585438755
 MonoBehaviour:
@@ -888,7 +879,7 @@ MonoBehaviour:
   m_Transitions:
   - m_Destination: {fileID: 1103790688585438761}
     m_EventID: 2116191811
-  m_CachedInstanceID: -272736
+  m_CachedInstanceID: -34032
 --- !u!114 &1103790688585438756
 MonoBehaviour:
   m_ObjectHideFlags: 2
@@ -912,7 +903,7 @@ MonoBehaviour:
     m_EventID: 350430802
   - m_Destination: {fileID: 1103790688585438760}
     m_EventID: 2086835765
-  m_CachedInstanceID: -272738
+  m_CachedInstanceID: -34034
   m_Description: 
   m_EnabledState: {fileID: 0}
   m_LastEnabledState: {fileID: 0}
@@ -936,12 +927,11 @@ MonoBehaviour:
   m_StateName: Napping
   m_Color: 0
   m_HideScript: 1
-  m_Position: {x: 120, y: 110}
+  m_Position: {x: 100, y: 100}
   m_Transitions:
   - m_Destination: {fileID: 5593055392762647703}
     m_EventID: 2128136315
-  m_CachedInstanceID: -272740
-  napTime: 0
+  m_CachedInstanceID: -34036
 --- !u!1 &5593055392682160788
 GameObject:
   m_ObjectHideFlags: 0
@@ -10899,6 +10889,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5593055392681733810}
     m_Modifications:
+    - target: {fileID: 195182, guid: 3464ac11686f806428c3048c02d66b5d, type: 3}
+      propertyPath: m_Name
+      value: Vision
+      objectReference: {fileID: 0}
     - target: {fileID: 431866, guid: 3464ac11686f806428c3048c02d66b5d, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.07
@@ -10954,10 +10948,6 @@ PrefabInstance:
     - target: {fileID: 431866, guid: 3464ac11686f806428c3048c02d66b5d, type: 3}
       propertyPath: m_LocalScale.z
       value: 2.13
-      objectReference: {fileID: 0}
-    - target: {fileID: 195182, guid: 3464ac11686f806428c3048c02d66b5d, type: 3}
-      propertyPath: m_Name
-      value: Vision
       objectReference: {fileID: 0}
     - target: {fileID: 11469114, guid: 3464ac11686f806428c3048c02d66b5d, type: 3}
       propertyPath: owner

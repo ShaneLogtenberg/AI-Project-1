@@ -9,7 +9,7 @@ public class ShyNPC : AllNPC
     public GameObject[] hiddingSpots;
     public GameObject hiddingSpotsHolder;
     public Vision playerVision;
-    public float remainingDistance;
+
     new void Start()
     {
         base.Start();
@@ -26,38 +26,38 @@ public class ShyNPC : AllNPC
     {
         while (true)
         {
-            if (HasFoundFood)
-            {
-                if (foodThatIsFound.transform.parent != null)
+                if (HasFoundFood && foodThatIsFound !=null)
                 {
-                    //Stay Hidden
-                }
-                else if (!playerVision.PointInSight(foodThatIsFound))
-                {
-                    //if (state.stateName != "MovingToFood" && state.stateName != "Eating")
-                    //{
+                    if (foodThatIsFound.transform.parent != null)
+                    {
+                        //Stay Hidden
+                    }
+                    else if (!playerVision.PointInSight(foodThatIsFound))
+                    {
+                        //if (state.stateName != "MovingToFood" && state.stateName != "Eating")
+                        //{
                         blackboard.SendEvent("HUNGRY");
-                    //}
+                        //}
+                    }
                 }
-            }        
 
-            if (IsVisiableToPlayer && !HasFoundFood)
-            {
-                if (state.stateName != "Retreating")
+                if (IsVisiableToPlayer)
                 {
-                    blackboard.SendEvent("INFOCUS");
+                    if (state.stateName != "Retreating")
+                    {
+                        blackboard.SendEvent("INFOCUS");
+                    }
                 }
-            }
 
-            if (!HasFoundFood && !IsVisiableToPlayer)
-            {
-                if (state.stateName != "Hidding")
+                if (!HasFoundFood && !IsVisiableToPlayer)
                 {
-                    blackboard.SendEvent("OUTFOCUS");
+                    if (state.stateName != "Hidding")
+                    {
+                        blackboard.SendEvent("OUTFOCUS");
+                    }
                 }
-            }
 
-            yield return new WaitForSeconds(2f);
+                yield return new WaitForSeconds(2f);
+            }
         }
     }
-}

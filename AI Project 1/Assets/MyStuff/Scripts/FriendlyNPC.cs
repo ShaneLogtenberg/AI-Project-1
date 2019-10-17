@@ -6,43 +6,43 @@ using UnityEngine.AI;
 
 public class FriendlyNPC : AllNPC
 {
-    public float wanderSpeed;
-    public float remainingDistance;
-    public bool navmeshpending;
     public float maxHungerMeter = 10;
     public float hungerMeter = 1;
-    public bool hangry = false;
+    public bool isHungry = false;
+
     new void Start()
     {
         base.Start();
         wanderSpeed = Random.Range(2f, 3f);
-        blackboard.GetFloatVar("Wander Speed").Value = wanderSpeed;
         StartCoroutine(Think());
     }
     void Update()
     {
-        if (!hangry)
+        if (!isHungry)
         {
             hungerMeter = hungerMeter - 1 * Time.deltaTime;
         }
 
         if (hungerMeter < 0)
         {
-            hangry = true;            
+            isHungry = true;            
         }
+
+        
     }
 
     public void Fed()
     {
         hungerMeter = maxHungerMeter;
-        hangry = false;
+        blackboard.SendEvent("TIRED");
+        isHungry = false;
     }
 
     IEnumerator Think()
     {
         while (true)
         {
-            if (HasFoundFood && hangry)
+            if (HasFoundFood && isHungry && foodThatIsFound != null)
             {
                 if (foodThatIsFound.transform.parent == player.transform)
                 {
@@ -58,7 +58,7 @@ public class FriendlyNPC : AllNPC
                 }
             }
 
-            if (IsVisiableToPlayer && !HasFoundFood && hangry)
+            if (IsVisiableToPlayer && !HasFoundFood && isHungry)
             {
                 //if (state.stateName != "MovingtoPlayer" && state.stateName != "ReachingPlayer")
                 //{
@@ -66,7 +66,7 @@ public class FriendlyNPC : AllNPC
                 //}
             }
 
-            if (!HasFoundFood && !IsVisiableToPlayer && !hangry)
+            if (!HasFoundFood && !IsVisiableToPlayer && !isHungry)
             {
                 if (state.stateName != "Wandering")
                 {

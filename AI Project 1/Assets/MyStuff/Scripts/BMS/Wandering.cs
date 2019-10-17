@@ -29,7 +29,7 @@ public class Wandering : StateBehaviour
     {
         nPC.agent.autoBraking = false;
         nPC.agent.isStopped = false;
-        nPC.agent.speed = blackboard.GetFloatVar("Wander Speed").Value;
+        nPC.agent.speed = nPC.wanderSpeed;
         nPC.animator.SetBool("Walk", true);
         point = blackboard.GetVector3Var("Destination").Value;
 

@@ -27,10 +27,14 @@ public class Eating : StateBehaviour
     {
         Destroy(nPC.foodThatIsFound);
         nPC.HasFoundFood = false;
-        SendEvent("NOFOOD");
+
         if(GetComponent<FriendlyNPC>()!= null)
         {
             GetComponent<FriendlyNPC>().Fed();            
+        }
+        else
+        {
+            SendEvent("NOFOOD");
         }
     }
 
@@ -50,9 +54,12 @@ public class Eating : StateBehaviour
 
             if (Vector3.Distance(nPC.foodThatIsFound.transform.position, transform.position) > 1f)
             {
-                nPC.animator.SetBool("Walk", true);
                 SendEvent("OUTREACH");
             }
+        }
+        else
+        {
+            SendEvent("NOFOOD");
         }
     }
 }

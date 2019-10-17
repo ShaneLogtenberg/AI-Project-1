@@ -6231,6 +6231,7 @@ GameObject:
   - component: {fileID: 6125108926322408053}
   - component: {fileID: 6125108926322408063}
   - component: {fileID: 6125108926322408056}
+  - component: {fileID: 1715651463991245993}
   m_Layer: 0
   m_Name: Friendly Cat
   m_TagString: Cat
@@ -6245,7 +6246,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1715651464139284174}
-  m_LocalRotation: {x: -0, y: 0.9999933, z: -0, w: -0.003657635}
+  m_LocalRotation: {x: 0, y: 0.9999934, z: -0, w: -0.003656304}
   m_LocalPosition: {x: 0, y: -0.509, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -6295,7 +6296,7 @@ LineRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1715651464139284174}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -6391,7 +6392,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1715651464139284174}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cd02a8960e96cfd49b1e4ec64ce85945, type: 3}
   m_Name: 
@@ -6416,7 +6417,7 @@ MonoBehaviour:
   m_HideScript: 1
   m_Position: {x: 0, y: 0}
   m_Transitions: []
-  m_CachedInstanceID: -288724
+  m_CachedInstanceID: -40004
   m_Description: 
   m_EnabledState: {fileID: 0}
   m_LastEnabledState: {fileID: 0}
@@ -6435,12 +6436,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 634db10235c0241d6ad43433a106016d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_FloatVars:
-  - m_ID: 2042281531
-    m_Name: Wander Speed
-    m_Blackboard: {fileID: 1715651464052013248}
-    m_IsConstant: 0
-    value: 0
+  m_FloatVars: []
   m_IntVars: []
   m_BoolVars: []
   m_StringVars: []
@@ -6495,6 +6491,16 @@ MonoBehaviour:
     m_Blackboard: {fileID: 1715651464052013248}
     m_IsConstant: 0
     m_IsSystem: 0
+  - m_ID: 1215252921
+    m_Name: TIRED
+    m_Blackboard: {fileID: 1715651464052013248}
+    m_IsConstant: 0
+    m_IsSystem: 0
+  - m_ID: 2128136315
+    m_Name: AWAKENED
+    m_Blackboard: {fileID: 1715651464052013248}
+    m_IsConstant: 0
+    m_IsSystem: 0
   m_Namespace: 
 --- !u!114 &1715651464052013250
 MonoBehaviour:
@@ -6519,11 +6525,12 @@ MonoBehaviour:
   IsVisiableToPlayer: 0
   HasFoundFood: 0
   wanderSpeed: 0
-  remainingDistance: 0
-  navmeshpending: 0
+  napTime: 10
+  awakeTime: 20
+  maxAwakeTime: 0
   maxHungerMeter: 10
   hungerMeter: 1
-  hangry: 0
+  isHungry: 0
 --- !u!195 &1715651464052013261
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -6565,7 +6572,7 @@ MonoBehaviour:
   m_HideScript: 1
   m_Position: {x: 90, y: 80}
   m_Transitions: []
-  m_CachedInstanceID: -288732
+  m_CachedInstanceID: -40012
   m_CanTransitionToSelf: 0
 --- !u!114 &1715651464052013259
 MonoBehaviour:
@@ -6590,7 +6597,7 @@ MonoBehaviour:
     m_EventID: 111577421
   - m_Destination: {fileID: 6125108926322408052}
     m_EventID: 2086835765
-  m_CachedInstanceID: -288734
+  m_CachedInstanceID: -40014
   point: {x: 0, y: 0, z: 0}
 --- !u!114 &6125108926322408041
 MonoBehaviour:
@@ -6613,7 +6620,7 @@ MonoBehaviour:
   m_Transitions:
   - m_Destination: {fileID: 6125108926322408042}
     m_EventID: 2116191811
-  m_CachedInstanceID: -288736
+  m_CachedInstanceID: -40016
 --- !u!114 &6125108926322408042
 MonoBehaviour:
   m_ObjectHideFlags: 2
@@ -6635,7 +6642,7 @@ MonoBehaviour:
   m_Transitions:
   - m_Destination: {fileID: 6125108926322408041}
     m_EventID: 690674679
-  m_CachedInstanceID: -288738
+  m_CachedInstanceID: -40018
 --- !u!114 &6125108926322408052
 MonoBehaviour:
   m_ObjectHideFlags: 2
@@ -6657,7 +6664,9 @@ MonoBehaviour:
   m_Transitions:
   - m_Destination: {fileID: 1715651464052013259}
     m_EventID: 2090714997
-  m_CachedInstanceID: -288740
+  - m_Destination: {fileID: 1715651463991245993}
+    m_EventID: 1215252921
+  m_CachedInstanceID: -40020
   m_Description: 
   m_EnabledState: {fileID: 0}
   m_LastEnabledState: {fileID: 0}
@@ -6685,7 +6694,7 @@ MonoBehaviour:
   m_Transitions:
   - m_Destination: {fileID: 6125108926322408063}
     m_EventID: 690674679
-  m_CachedInstanceID: -288742
+  m_CachedInstanceID: -40022
   playerFront: {x: 0, y: 0, z: 0}
 --- !u!114 &6125108926322408063
 MonoBehaviour:
@@ -6708,7 +6717,7 @@ MonoBehaviour:
   m_Transitions:
   - m_Destination: {fileID: 6125108926322408053}
     m_EventID: 2116191811
-  m_CachedInstanceID: -288744
+  m_CachedInstanceID: -40024
 --- !u!114 &6125108926322408056
 MonoBehaviour:
   m_ObjectHideFlags: 2
@@ -6732,13 +6741,35 @@ MonoBehaviour:
     m_EventID: 350430802
   - m_Destination: {fileID: 6125108926322408052}
     m_EventID: 2086835765
-  m_CachedInstanceID: -288746
+  m_CachedInstanceID: -40026
   m_Description: 
   m_EnabledState: {fileID: 0}
   m_LastEnabledState: {fileID: 0}
   m_StartState: {fileID: 6125108926322408053}
   m_AnyState: {fileID: 0}
   m_ConcurrentState: {fileID: 0}
+--- !u!114 &1715651463991245993
+MonoBehaviour:
+  m_ObjectHideFlags: 2
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1715651464139284174}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 961ff2c64d416e941a638b91e6fc8285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Blackboard: {fileID: 1715651464052013248}
+  m_Parent: {fileID: 1715651464052013255}
+  m_StateName: Napping
+  m_Color: 0
+  m_HideScript: 1
+  m_Position: {x: 110, y: 140}
+  m_Transitions:
+  - m_Destination: {fileID: 1715651464052013259}
+    m_EventID: 2128136315
+  m_CachedInstanceID: -40028
 --- !u!1 &1715651464139284176
 GameObject:
   m_ObjectHideFlags: 0

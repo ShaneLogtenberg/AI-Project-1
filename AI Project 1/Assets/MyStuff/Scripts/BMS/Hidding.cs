@@ -39,5 +39,17 @@ public class Hidding : StateBehaviour
             Vector3 newDir = Vector3.RotateTowards(transform.forward, nPC.player.transform.position, nPC.agent.speed * Time.deltaTime, 0.0f);
             gameObject.transform.rotation = Quaternion.LookRotation(newDir);
         }
+
+
+        if (nPC.awakeTime >= 0)
+        {
+            nPC.awakeTime -= 1 * Time.deltaTime;
+        }
+
+        if (nPC.awakeTime <= 0)
+        {
+            nPC.awakeTime = 0;
+            blackboard.SendEvent("TIRED");
+        }
     }
 }

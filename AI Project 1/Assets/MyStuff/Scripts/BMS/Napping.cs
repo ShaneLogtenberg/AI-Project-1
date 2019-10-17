@@ -7,14 +7,14 @@ using UnityEngine.AI;
 public class Napping : StateBehaviour
 {
     AllNPC nPC;
-    Transform body;
-    public float napTime;
+
+    float napTime;
     bool wakingUp;
 
     private void OnEnable()
     {
         nPC = GetComponent<AllNPC>();
-        napTime = blackboard.GetFloatVar("Nap Time").Value;
+        napTime = nPC.napTime;
         nPC.agent.isStopped = true;
         nPC.animator.SetTrigger("Tired");
     }
@@ -38,7 +38,7 @@ public class Napping : StateBehaviour
     {
         wakingUp = true;
         nPC.animator.SetTrigger("Awake");
-        nPC.GetComponent<LaxNPC>().NotTiredAnyMore();
+        nPC.awakeTime = nPC.maxAwakeTime;
     }
 
     public void FinishedAnimation()

@@ -9,7 +9,6 @@ public class Bumping : StateBehaviour
     AllNPC nPC;
     private void OnEnable()
     {
-        Debug.Log(gameObject.name + "Got Bumped");
-
+        nPC = GetComponent<AllNPC>();
     }
 }

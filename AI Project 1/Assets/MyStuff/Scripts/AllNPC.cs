@@ -23,9 +23,15 @@ public class AllNPC : MonoBehaviour
 
     public GameObject foodThatIsFound;
 
-
     public bool IsVisiableToPlayer;
     public bool HasFoundFood;
+
+    public float wanderSpeed;
+    public float napTime;
+    public float awakeTime;
+
+    [HideInInspector]
+    public float maxAwakeTime;
 
     // Start is called before the first frame update
     public void Start()
@@ -38,6 +44,7 @@ public class AllNPC : MonoBehaviour
         player = global.GetGameObjectVar("Player");
         vision = transform.GetComponentInChildren<Vision>();
         //InvokeRepeating("Sniff",1f,1f);
+        maxAwakeTime = awakeTime;
     }
 
     void OnVisionEnter()
