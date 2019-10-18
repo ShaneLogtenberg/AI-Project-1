@@ -73,7 +73,7 @@ public class Wandering : StateBehaviour
         if (!nPC.agent.pathPending && nPC.agent.remainingDistance < 1f)
             GotoNextPoint();
 
-        Debug.DrawLine(transform.position, transform.position + (Quaternion.Euler(0, -45f, 0) * transform.forward * 10), Color.yellow);
-        Debug.DrawLine(transform.position, transform.position + (Quaternion.Euler(0, 45f, 0) * transform.forward * 10), Color.yellow);
+        //Debug.DrawLine(transform.position, transform.position + (Quaternion.Euler(0, -45f, 0) * transform.forward * 10), Color.yellow);
+        //Debug.DrawLine(transform.position, transform.position + (Quaternion.Euler(0, 45f, 0) * transform.forward * 10), Color.yellow);
     }
 }

@@ -7,28 +7,33 @@ using UnityEngine.AI;
 public class Napping : StateBehaviour
 {
     AllNPC nPC;
-
-    float napTime;
-    bool wakingUp;
+    
+    public float napTime;
+    public bool wakingUp;
+    public bool layingdownDown;
 
     private void OnEnable()
     {
         nPC = GetComponent<AllNPC>();
         napTime = nPC.napTime;
         nPC.agent.isStopped = true;
+        wakingUp = false;
         nPC.animator.SetTrigger("Tired");
     }
 
     void Update()
     {
-        napTime -= 1 * Time.deltaTime;
+        if (layingdownDown)
+        {
+            napTime -= 1 * Time.deltaTime;
+        }
 
         if (napTime < 0 && !wakingUp)
         {
             WakeUp();
         }
 
-        if(nPC.HasFoundFood == true)
+        if(nPC.HasFoundFood == true && !wakingUp)
         {
             WakeUp();
         }
@@ -41,7 +46,12 @@ public class Napping : StateBehaviour
         nPC.awakeTime = nPC.maxAwakeTime;
     }
 
-    public void FinishedAnimation()
+    public void LaydownDone()
+    {
+        layingdownDown = true;
+    }
+
+    public void GetUpDone()
     {
         if (GetComponent<FriendlyNPC>() != null)
         {

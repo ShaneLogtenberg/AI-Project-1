@@ -23,8 +23,9 @@ public class FriendlyNPC : AllNPC
             hungerMeter = hungerMeter - 1 * Time.deltaTime;
         }
 
-        if (hungerMeter < 0)
+        if (hungerMeter < 0 && !isHungry)
         {
+            hungerMeter = 0;
             isHungry = true;            
         }
     }
@@ -45,7 +46,7 @@ public class FriendlyNPC : AllNPC
     {
         while (true)
         {
-            if (HasFoundFood && isHungry && foodThatIsFound != null)
+            if (HasFoundFood && foodThatIsFound != null)
             {
                 if (foodThatIsFound.transform.parent == player.transform)
                 {
